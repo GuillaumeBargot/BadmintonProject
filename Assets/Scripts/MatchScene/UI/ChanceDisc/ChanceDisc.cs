@@ -17,7 +17,7 @@ public partial class ChanceDisc : MonoBehaviour
     private Disc failDisc;
 
     [SerializeField]
-    private Line arrow;
+    private Polyline arrow;
 
     private const float START_VAR = Mathf.PI / 2.0f;
     private const float END_VAR = 5 * Mathf.PI / 2.0f;
