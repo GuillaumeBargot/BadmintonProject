@@ -14,6 +14,9 @@ namespace GameEngine
         [SerializeField]
         ScoreDisplay scoreDisplay;
 
+        [SerializeField]
+        Field field;
+
         private int playerServing = 0;
 
         void Awake()
@@ -43,11 +46,13 @@ namespace GameEngine
                 case ShotResult.CRIT:
                     Debug.Log(GetPlayer(playerShooting).Name() + " crits !");
                     score.ScoreFor(playerShooting);
+                    FieldCritResult(playerShooting, shot.shotCoord.Get());
                     RefreshScoreRecap();
                     break;
                 case ShotResult.FAIL:
                     Debug.Log(GetPlayer(playerShooting).Name() + " fails !");
                     score.ScoreAgainst(playerShooting);
+                    FieldFailResult(playerShooting, shot.shotCoord.Get());
                     RefreshScoreRecap();
                     break;
                 default:
@@ -90,6 +95,14 @@ namespace GameEngine
         private void RefreshScoreRecap(){
             score.LogScore();
             scoreDisplay.SetScoreRecap(score.GetScoreRecap());
+        }
+
+        private void FieldCritResult(int playerShooting, (int, int) coord){
+            field.DoARandomGreen(OtherPlayer(playerShooting));
+        }
+
+        private void FieldFailResult(int playerShooting, (int, int) coord){
+            field.DoARandomGreen(playerShooting);
         }
     }
 }

@@ -28,4 +28,12 @@ public static class Maths
     public static float Rand100(){
         return Random.Range(0f,100f);
     }
+
+    public static int Rand9(){
+        return Random.Range(0,9);
+    }
+
+    public static (int,int) RandCoord(){
+        return (Random.Range(0,3),Random.Range(0,3));
+    }
 }

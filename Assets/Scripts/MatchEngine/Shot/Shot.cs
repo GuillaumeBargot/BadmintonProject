@@ -13,11 +13,13 @@ namespace GameEngine
 
 
         //Quality of the shot. 
-        public int critChance;
-        public int normalChance;
-        public int failChance;
+        public float critChance;
+        public float normalChance;
+        public float failChance;
 
-        public int randomNumber;
+        public ShotCoord shotCoord;
+
+        public float randomNumber;
 
         //Type of the shot.
         private int type;
@@ -28,12 +30,9 @@ namespace GameEngine
             failChance = 10;
         }
 
-        private int Random100(){
-            return Random.Range(0,100);
-        }
-
         public ShotResult ComputeShot(){
-            randomNumber = Random100();
+            randomNumber = Maths.Rand100();
+            shotCoord = new ShotCoord();
 
             if(randomNumber<=critChance){
                 return ShotResult.CRIT;
