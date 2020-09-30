@@ -40,23 +40,23 @@ namespace GameEngine
 
         public void ComputeShot(Shot shot, int playerShooting)
         {
-            ShotResult shotResult = shot.ComputeShot();
-            switch (shotResult)
+            shot.ComputeShot();
+            switch (shot.shotResult)
             {
                 case ShotResult.CRIT:
-                    Debug.Log(GetPlayer(playerShooting).Name() + " crits !");
+                    Debug.Log(GetPlayer(playerShooting).Name() + " crits  a " + ShotType.GetName(shot.type) + " @"+shot.shotCoord.Get() +"!");
                     score.ScoreFor(playerShooting);
                     FieldCritResult(playerShooting, shot.shotCoord.Get());
                     RefreshScoreRecap();
                     break;
                 case ShotResult.FAIL:
-                    Debug.Log(GetPlayer(playerShooting).Name() + " fails !");
+                    Debug.Log(GetPlayer(playerShooting).Name() + " fails a " + ShotType.GetName(shot.type) + " @"+shot.shotCoord.Get() +"!");
                     score.ScoreAgainst(playerShooting);
                     FieldFailResult(playerShooting, shot.shotCoord.Get());
                     RefreshScoreRecap();
                     break;
                 default:
-                    Debug.Log(GetPlayer(playerShooting).Name() + " shoots back !");
+                    Debug.Log(GetPlayer(playerShooting).Name() + " returns a " + ShotType.GetName(shot.type) + " @"+shot.shotCoord.Get() +"!");
                     NewShot(shot, OtherPlayer(playerShooting));
                     break;
             }
@@ -71,14 +71,12 @@ namespace GameEngine
         {
             playerServing = OtherPlayer(playerServing);
             Shot shot = CreateShot(GetPlayer(playerServing));
-            shot.DetermineChances();
             ComputeShot(shot, playerServing);
         }
 
         public void NewShot(Shot previousShot, int playerShooting)
         {
             Shot shot = CreateShot(GetPlayer(playerShooting));
-            shot.DetermineChances();
             ComputeShot(shot, playerShooting);
         }
 
@@ -89,7 +87,7 @@ namespace GameEngine
 
         public Shot CreateShot(PlayerMatchInstance player)
         {
-            return new Shot();
+            return new Shot(player);
         }
 
         private void RefreshScoreRecap(){

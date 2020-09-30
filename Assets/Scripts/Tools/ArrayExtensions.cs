@@ -13,4 +13,12 @@ public static class ArrayExtensions
 
         return arr;
     }
+
+    /*public static float Sum(this float[] arr){
+        float sum = 0.0f;
+        for(int i = 0; i < arr.Length; i++){
+            sum += arr[i];
+        }
+        return sum;
+    }*/
 }

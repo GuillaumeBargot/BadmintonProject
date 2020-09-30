@@ -42,6 +42,14 @@ public class PlayerMatchInstance
         return player.stats.stamina;
     }
 
+    public ShotTypeTendencies ShotTypeTendencies(){
+        return player.shotTypeTendencies;
+    }
+
+    public ShotCoordTendencies ShotCoordTendencies(){
+        return player.shotCoordTendencies;
+    }
+
     
 
 }

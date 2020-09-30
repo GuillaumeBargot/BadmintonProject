@@ -42,28 +42,28 @@ public partial class ChanceDisc : MonoBehaviour
     }
 
     public void TestLongShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[Shot.LONG]);
+        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.LONG]);
     }
 
     public void TestRushShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[Shot.RUSH]);
+        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.RUSH]);
     }
 
     public void TestSmashShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[Shot.SMASH]);
+        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.SMASH]);
     }
 
     public void TestShortShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[Shot.SHORT]);
+        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.SHORT]);
     }
 
     public void RewindAndShow(ShotChance shotChance){
         AnimateTo0().OnComplete(()=>
-        FillToChance(new ShotChance(shotChance.crit,shotChance.normal,shotChance.fail)));
+        FillToChance(shotChance));
     }
 
     public void TransitionShow(ShotChance shotChance){
-        AnimateToChance(new ShotChance(shotChance.crit, shotChance.normal, shotChance.fail));
+        AnimateToChance(shotChance);
     }
 
 
