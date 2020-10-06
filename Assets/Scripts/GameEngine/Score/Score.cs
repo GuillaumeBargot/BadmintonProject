@@ -12,6 +12,8 @@ namespace GameEngine
 
         private static int MIN_DIFFERENCE = 2;
 
+        private static int MAX_MAX_POINTS = 30;
+
         private (int, int) matchScore;
         private (int, int)[] setsScores;
         private int currentSet;
@@ -94,8 +96,8 @@ namespace GameEngine
         public bool CheckIfEndOfSet()
         {
             (int score1, int score2) = setsScores[currentSet];
-            if ((score1 >= MAX_POINTS || score2 >= MAX_POINTS) &&
-            (Math.Abs(score1 - score2) >= MIN_DIFFERENCE))
+            if ( SomeoneOver21(score1, score2) &&
+            ( DifferenceOver2(score1, score2) || SomeoneAtMaxScore(score1, score2)))
             {
                 return true;
             }
@@ -103,6 +105,18 @@ namespace GameEngine
             {
                 return false;
             }
+        }
+
+        private bool SomeoneOver21(int score1, int score2){
+            return (score1 >= MAX_POINTS || score2 >= MAX_POINTS);
+        }
+
+        private bool DifferenceOver2(int score1, int score2){
+            return (Math.Abs(score1 - score2) >= MIN_DIFFERENCE);
+        }
+
+        private bool SomeoneAtMaxScore(int score1, int score2){
+            return (score1<=MAX_MAX_POINTS || score2<=MAX_MAX_POINTS);
         }
 
         public void ProceedChangeOfSet()
