@@ -55,5 +55,8 @@ namespace GameEngine
             shotHistory.Add(currentShot.GetHistoryShot());
         }
 
+        public ((int, int), (int, int)) GetServingPositions(){
+            return ((Serve)currentShot).GetPlayerIntialPositions();
+        }
     }
 }

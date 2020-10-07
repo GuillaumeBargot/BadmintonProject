@@ -181,5 +181,9 @@ namespace GameEngine
             return matchScore;
         }
 
+        public (int, int) GetCurrentSetScore(){
+            return setsScores[currentSet];
+        }
+
     }
 }

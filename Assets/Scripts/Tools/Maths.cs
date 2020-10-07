@@ -38,18 +38,6 @@ public static class Maths
         return (Random.Range(0,3),Random.Range(0,3));
     }
 
-    public static int RandWithPercentages(float[] percentages){
-        float rand = Rand100();
-        float previousChancesSum = 0;
-        for(int i = 0; i < percentages.Length; i ++){
-            if(rand<= previousChancesSum + percentages[i]){
-                return i;
-            }
-            previousChancesSum+=percentages[i];
-        }
-        return percentages.Length-1;
-    }
-
 
     // ----------------------------------------------------------------------------------------------
     //                                      COORDINATES (3x3)
@@ -57,30 +45,10 @@ public static class Maths
 
     public static int GetIndexForCoord((int, int) coord)
     {
-        return coord.Item1 * 3 + coord.Item2;
+        return coord.Item2 * 3 + coord.Item1;
     }
 
     public static (int, int) GetCoordForIndex(int index){
-        return (index/3,index%3);
-    }
-
-    public static float[] MergeCoordTendencies(float[] tendencies1, float[] tendencies2){
-        float[] resultingTendencies = new float[9];
-        for(int i = 0; i < 9; i++){
-            resultingTendencies[i] = tendencies1[i] * tendencies2[i];
-        }
-
-        float resultSum = resultingTendencies.Sum();
-        float multiplicator = 100f/resultSum;
-
-        resultingTendencies.Multiply(multiplicator);
-        return resultingTendencies;
-    }
-
-    public static float[] Multiply(this float[] tendencies, float multiplicator){
-        for(int i = 0; i < 9; i++){
-            tendencies[i] *= multiplicator;
-        }
-        return tendencies;
+        return (index%3,index/3);
     }
 }

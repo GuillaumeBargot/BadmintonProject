@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameEngine;
 
 public class Player
 {
@@ -9,24 +10,24 @@ public class Player
     public Sex sex;
     public PlayerStats stats;
 
-    public ShotTypeTendencies shotTypeTendencies; 
-    public ShotCoordTendencies shotCoordTendencies;
+    public ShotTypeProbabilities shotTypeProbabilities; 
+    public ShotCoordProbabilities shotCoordProbabilities;
 
     public Player(){
         name = "Jean Valjean";
         sex = Sex.MALE;
         stats = new PlayerStats();
-        shotTypeTendencies = new ShotTypeTendencies();
-        shotCoordTendencies = new ShotCoordTendencies();
+        shotTypeProbabilities = new ShotTypeProbabilities();
+        shotCoordProbabilities = new ShotCoordProbabilities();
     }
 
     public Player(string name){
         this.name = name;
         sex = Sex.MALE;
         stats = new PlayerStats();
-        shotTypeTendencies = new ShotTypeTendencies();
-        shotCoordTendencies = new ShotCoordTendencies();
+        shotTypeProbabilities = new ShotTypeProbabilities();
+        shotCoordProbabilities = new ShotCoordProbabilities();
         Debug.Log("Player created, shoot coord tendencies: " );
-        shotCoordTendencies.Log();
+        shotCoordProbabilities.Log();
     }
 }

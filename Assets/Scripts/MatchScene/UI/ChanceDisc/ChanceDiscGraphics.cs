@@ -33,14 +33,14 @@ public partial class ChanceDisc
     // ----------------------------------------------------------------------------------------------
 
 
-    private void FillToChance(ShotChance shotChance){
-        DOTween.To(x => failDisc.AngRadiansEnd = x, failDisc.AngRadiansEnd, END_VAR, animationDuration).OnUpdate(()=>UpdateForFill(shotChance)).SetEase(Ease.InOutCubic);
+    private void FillToChance(ShotResultProbabilities resultProbabilities){
+        DOTween.To(x => failDisc.AngRadiansEnd = x, failDisc.AngRadiansEnd, END_VAR, animationDuration).OnUpdate(()=>UpdateForFill(resultProbabilities)).SetEase(Ease.InOutCubic);
     }
 
-    private void UpdateForFill(ShotChance shotChance){
+    private void UpdateForFill(ShotResultProbabilities resultProbabilities){
         float commonAngle = failDisc.AngRadiansEnd;
-        float endCrit = START_VAR + Maths.GetRadForPercentage(shotChance.crit);
-        float endNormal = endCrit + Maths.GetRadForPercentage(shotChance.normal);
+        float endCrit = START_VAR + Maths.GetRadForPercentage(resultProbabilities.Crit);
+        float endNormal = endCrit + Maths.GetRadForPercentage(resultProbabilities.Normal);
         if(commonAngle <= endNormal){
             failDisc.AngRadiansStart = commonAngle;
             normalDisc.AngRadiansEnd = commonAngle;
@@ -62,12 +62,12 @@ public partial class ChanceDisc
     //                                      CHANCE TO CHANCE
     // ----------------------------------------------------------------------------------------------
 
-    private void AnimateToChance(ShotChance shotChance){
+    private void AnimateToChance(ShotResultProbabilities resultProbabilities){
         float endCritFrom = critDisc.AngRadiansEnd;
         float endNormalFrom = normalDisc.AngRadiansEnd;
 
-        float endCritTo = START_VAR + Maths.GetRadForPercentage(shotChance.crit);
-        float endNormalTo = endCritTo + Maths.GetRadForPercentage(shotChance.normal);
+        float endCritTo = START_VAR + Maths.GetRadForPercentage(resultProbabilities.Crit);
+        float endNormalTo = endCritTo + Maths.GetRadForPercentage(resultProbabilities.Normal);
 
         DOTween.To(x=>critDisc.AngRadiansEnd = x, endCritFrom, endCritTo, animationDuration).SetEase(Ease.InOutCubic); 
         DOTween.To(x=>normalDisc.AngRadiansStart = x, endCritFrom, endCritTo, animationDuration).SetEase(Ease.InOutCubic); 

@@ -6,7 +6,7 @@ namespace GameEngine
     public class Shot
     {
         //Quality of the shot. 
-        public ShotChance shotChance;
+        public ShotResultProbabilities shotResultProbabilities;
 
         public ShotCoord shotCoord;
 
@@ -28,7 +28,7 @@ namespace GameEngine
 
         public Shot(int playerShooting, Shot previousShot){
             player = MatchEngine.Instance.GetPlayer(playerShooting);
-            type = player.ShotTypeTendencies().GetShot();
+            type = player.ShotTypeProbabilities().Calculate();
             this.playerShooting = playerShooting;
             from = previousShot.to;
             shotCoord = new ShotCoord(type, player);
@@ -38,7 +38,7 @@ namespace GameEngine
 
         public Shot(int playerShooting){
             player = MatchEngine.Instance.GetPlayer(playerShooting);
-            type = player.ShotTypeTendencies().GetShot();
+            type = player.ShotTypeProbabilities().Calculate();
             this.playerShooting = playerShooting;
             shotCoord = new ShotCoord(type, player);
             to = shotCoord.Get();
@@ -46,12 +46,11 @@ namespace GameEngine
         }
 
         private void DetermineChances(){
-            shotChance = new ShotChance();
-            shotChance.FromType(type);
+            shotResultProbabilities = ShotResultProbabilities.GetShotTypeResultProbabilities(type);
         }
 
         public void ComputeShot(){
-            shotResult = shotChance.GetResult();
+            shotResult = shotResultProbabilities.Calculate();
         }
 
         public HistoryShot GetHistoryShot(){

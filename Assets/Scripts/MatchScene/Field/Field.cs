@@ -69,15 +69,15 @@ public class Field : MonoBehaviour
         Vector3 from = new Vector3();
         Vector3 to = new Vector3();
         if(playerShooting==0){
-            from = cpuSideCoordinates[indexFrom];
-            to = p1SideCoordinates[indexTo];
-            MovePlayer(player,from);
-            MovePlayer(cpu,to);
-        }else{
             from = p1SideCoordinates[indexFrom];
             to = cpuSideCoordinates[indexTo];
-            MovePlayer(player, to);
-            MovePlayer(cpu,from);
+            MovePlayer(player,from, true);
+            MovePlayer(cpu,to, false);
+        }else{
+            from = cpuSideCoordinates[indexFrom];
+            to = p1SideCoordinates[indexTo];
+            MovePlayer(player, to, false);
+            MovePlayer(cpu,from, true);
         }
         AnimateShot(from,to);
     }
@@ -90,7 +90,23 @@ public class Field : MonoBehaviour
         DOTween.To(()=> shotLine.End, x=> shotLine.End = x, to, 0.25f).SetEase(Ease.InFlash).OnComplete(()=>Destroy(shotLine.gameObject));
     }
 
-    private void MovePlayer(Disc disc, Vector3 to){
-        disc.transform.DOLocalMove(to,0.25f).SetEase(Ease.InCirc);
+    private void MovePlayer(Disc disc, Vector3 to, bool instant){
+        if(!instant){
+            disc.transform.DOLocalMove(to,0.25f).SetEase(Ease.InCirc);
+        }else{
+            disc.transform.localPosition = to;
+        }
+    }
+
+    public void PositionPlayers(int playerServing, ((int, int),(int, int)) positions){
+        int position1Index = Maths.GetIndexForCoord(positions.Item1);
+        int position2Index = Maths.GetIndexForCoord(positions.Item2);
+        if(playerServing==0){
+            MovePlayer(player,p1SideCoordinates[position1Index],true);
+            MovePlayer(cpu,cpuSideCoordinates[position2Index],true);
+        }else{
+            MovePlayer(cpu, cpuSideCoordinates[position1Index], true);
+            MovePlayer(player, p1SideCoordinates[position2Index], true);
+        }
     }
 }

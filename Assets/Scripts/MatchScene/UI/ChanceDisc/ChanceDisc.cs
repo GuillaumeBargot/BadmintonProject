@@ -26,44 +26,28 @@ public partial class ChanceDisc : MonoBehaviour
 
     private void Awake()
     {
-        SetChance(new ShotChance(15,70,15));
+        SetChance(new ShotResultProbabilities(new float[]{15,70,15}));
     }
 
     public void RandomRewindAndShow(){
-        RewindAndShow(ShotChance.RandomChance());
+        RewindAndShow(ShotResultProbabilities.RandomProbabilities());
     }
 
     public void RandomTransitionShow(){
-        TransitionShow(ShotChance.RandomChance());
+        TransitionShow(ShotResultProbabilities.RandomProbabilities());
     }
 
     public void RandomArrowAnimation(){
         TurnArrow(Maths.Rand100());
     }
 
-    public void TestLongShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.LONG]);
-    }
-
-    public void TestRushShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.RUSH]);
-    }
-
-    public void TestSmashShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.SMASH]);
-    }
-
-    public void TestShortShow(){
-        TransitionShow(ShotChance.GENERIC_CHANCES[(int)ShotType.Type.SHORT]);
-    }
-
-    public void RewindAndShow(ShotChance shotChance){
+    public void RewindAndShow(ShotResultProbabilities resultProbabilities){
         AnimateTo0().OnComplete(()=>
-        FillToChance(shotChance));
+        FillToChance(resultProbabilities));
     }
 
-    public void TransitionShow(ShotChance shotChance){
-        AnimateToChance(shotChance);
+    public void TransitionShow(ShotResultProbabilities resultProbabilities){
+        AnimateToChance(resultProbabilities);
     }
 
 
@@ -85,10 +69,10 @@ public partial class ChanceDisc : MonoBehaviour
         }
     }
     
-    private void SetChance(ShotChance shotChance)
+    private void SetChance(ShotResultProbabilities resultProbabilities)
     {
-        float endCrit = START_VAR + Maths.GetRadForPercentage(shotChance.crit);
-        float endNormal = endCrit + Maths.GetRadForPercentage(shotChance.normal);
+        float endCrit = START_VAR + Maths.GetRadForPercentage(resultProbabilities.Crit);
+        float endNormal = endCrit + Maths.GetRadForPercentage(resultProbabilities.Normal);
 
         critDisc.AngRadiansStart = START_VAR;
         critDisc.AngRadiansEnd = endCrit;

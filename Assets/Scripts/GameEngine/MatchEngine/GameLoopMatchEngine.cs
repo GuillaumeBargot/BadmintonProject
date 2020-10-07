@@ -31,6 +31,7 @@ namespace GameEngine
 
             playerServing = OtherPlayer(playerServing);
             currentPoint = new Point(playerServing, score, pointHistory);
+            PositionTwoPlayersBeforeServe(playerServing, currentPoint.GetServingPositions());
             //currentShot = CreateShot(GetPlayer(playerServing));
             //currentPlayerShooting = playerServing;
            // bool isServing = true;

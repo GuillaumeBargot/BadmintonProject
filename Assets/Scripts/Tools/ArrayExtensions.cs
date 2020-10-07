@@ -21,4 +21,27 @@ public static class ArrayExtensions
         }
         return sum;
     }*/
+
+    public static float[] Multiply(this float[] array, float multiplicator)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                array[i] *= multiplicator;
+            }
+            return array;
+        }
+
+    public static float[] Multiply(this float[] array1, float[] array2){
+        int length = array1.Length;
+        if(length!=array2.Length){
+            return array1;
+        }
+        float[] result = new float[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = array1[i] * array2[i];
+            }
+
+        return result;
+    }
 }

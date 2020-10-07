@@ -16,7 +16,7 @@ namespace GameEngine
         
 
         public Serve(int playerShooting, Score score) : base(playerShooting){
-            int points = (playerShooting==0)?(score.GetMatchScore().Item1):(score.GetMatchScore().Item2);
+            int points = (playerShooting==0)?(score.GetCurrentSetScore().Item1):(score.GetCurrentSetScore().Item2);
             side = (points%2==0)?Side.RIGHT:Side.LEFT;
             SetFrom();
             SetTo(); 
@@ -24,11 +24,15 @@ namespace GameEngine
         }
 
         private void SetFrom(){
-            from = (side==Side.RIGHT)?(1,2):(1,0);
+            from = (side==Side.RIGHT)?(2,1):(0,1);
         }
 
         private void SetTo(){
-            to = (side==Side.RIGHT)?(2,0):(2,2);
+            to = (side==Side.RIGHT)?(2,2):(0,2);
+        }
+
+        public ((int, int), (int, int)) GetPlayerIntialPositions(){
+            return (from, to);
         }
     }
 }

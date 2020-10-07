@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GameEngine;
 public class PlayerMatchInstance 
 {
     //You will use function here to communicate between the two players
@@ -42,12 +42,12 @@ public class PlayerMatchInstance
         return player.stats.stamina;
     }
 
-    public ShotTypeTendencies ShotTypeTendencies(){
-        return player.shotTypeTendencies;
+    public ShotTypeProbabilities ShotTypeProbabilities(){
+        return player.shotTypeProbabilities;
     }
 
-    public ShotCoordTendencies ShotCoordTendencies(){
-        return player.shotCoordTendencies;
+    public ShotCoordProbabilities ShotCoordTendencies(){
+        return player.shotCoordProbabilities;
     }
 
     

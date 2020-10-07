@@ -68,22 +68,15 @@ namespace GameEngine
             scoreDisplay.SetScoreRecap(score.GetScoreRecap());
         }
 
-        private void FieldCritResult(int playerShooting, (int, int) coord)
-        {
-            field.DoARandomGreen(OtherPlayer(playerShooting));
-        }
-
         private void FieldShot(int playerShooting, (int, int) from, (int, int) to){
             int indexFrom = Maths.GetIndexForCoord(from);
             int indexTo = Maths.GetIndexForCoord(to);
             field.DoAShot(indexFrom, indexTo, playerShooting);
         }
 
-        private void FieldFailResult(int playerShooting, (int, int) coord)
-        {
-            field.DoARandomGreen(playerShooting);
+        private void PositionTwoPlayersBeforeServe(int playerServing, ((int, int),(int, int)) positions){
+            field.PositionPlayers(playerServing, positions);
         }
-
 
     }
 }

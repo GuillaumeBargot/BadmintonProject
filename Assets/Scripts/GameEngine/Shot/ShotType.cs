@@ -14,8 +14,8 @@ namespace GameEngine
             SHORT = 3
         }
 
-        public static ShotCoordTendencies GetCoordTendencies(Type type){
-            return ShotCoordTendencies.GetShotTypeCoordTendencies(type);
+        public static ShotCoordProbabilities GetCoordTendencies(Type type){
+            return ShotCoordProbabilities.GetShotTypeCoordProbabilities(type);
         }
         
         public static string GetName(Type type){
