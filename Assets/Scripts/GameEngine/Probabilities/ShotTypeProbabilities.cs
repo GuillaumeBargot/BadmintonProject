@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GameEngine
 {
-    public class ShotTypeProbabilities : Probabilities<ShotType.Type>
+    public class ShotTypeProbabilities : Probabilities<ShotType>
     {
         //CONSTANTS
         private readonly static float[] BASE_PROBABILITIES = new float[]{40,20,10,30};
@@ -13,7 +13,7 @@ namespace GameEngine
         public ShotTypeProbabilities(float[] probabilities) : base(probabilities){}
         
         protected override void SetAssociatedResults(){
-            associatedResults = new ShotType.Type[]{ShotType.Type.LONG, ShotType.Type.RUSH, ShotType.Type.SHORT,ShotType.Type.SMASH};
+            associatedResults = new ShotType[]{ShotType.LONG, ShotType.RUSH, ShotType.SHORT,ShotType.SMASH};
         }
     }
 }

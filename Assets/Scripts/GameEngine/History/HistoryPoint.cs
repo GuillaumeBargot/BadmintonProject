@@ -11,9 +11,9 @@ namespace GameEngine
         public int numberOfShots;
 
         //LAST SHOT
-        public (int, int) lastShotFrom;
-        public (int, int) lastShotTo;
-        public ShotType.Type lastShotType;
+        public ShotCoord lastShotFrom;
+        public ShotCoord lastShotTo;
+        public ShotType lastShotType;
 
         public HistoryPoint(int playerWinning, int numberOfShots, HistoryShot lastShot){
             this.playerWinning = playerWinning;

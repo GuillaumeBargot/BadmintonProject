@@ -27,11 +27,8 @@ namespace GameEngine
 
         public IEnumerator PointCoroutine()
         {
-
-
-            playerServing = OtherPlayer(playerServing);
-            currentPoint = new Point(playerServing, score, pointHistory);
-            PositionTwoPlayersBeforeServe(playerServing, currentPoint.GetServingPositions());
+            currentPoint = new Point(score, pointHistory);
+            PositionTwoPlayersBeforeServe(currentPoint.currentPlayerServing, currentPoint.GetServingPositions(score));
             //currentShot = CreateShot(GetPlayer(playerServing));
             //currentPlayerShooting = playerServing;
            // bool isServing = true;
@@ -61,7 +58,7 @@ namespace GameEngine
             switch (currentPoint.currentShot.shotResult)
             {
                 case ShotResult.CRIT:
-                    Debug.Log(currentPMI.Name() + " crits  a " + ShotType.GetName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.shotCoord.Get() + "!");
+                    Debug.Log(currentPMI.Name() + " crits  a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     score.ScoreFor(currentPoint.currentPlayerShooting);
                     //FieldCritResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
@@ -69,7 +66,7 @@ namespace GameEngine
                     currentPoint.pointOver = true;
                     break;
                 case ShotResult.FAIL:
-                    Debug.Log(currentPMI.Name() + " fails a " + ShotType.GetName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.shotCoord.Get() + "!");
+                    Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     score.ScoreAgainst(currentPoint.currentPlayerShooting);
                     //FieldFailResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
@@ -78,7 +75,7 @@ namespace GameEngine
                     break;
                 default:
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
-                    Debug.Log(currentPMI.Name() + " returns a " + ShotType.GetName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.shotCoord.Get() + "!");
+                    Debug.Log(currentPMI.Name() + " returns a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     break;
             }
         }

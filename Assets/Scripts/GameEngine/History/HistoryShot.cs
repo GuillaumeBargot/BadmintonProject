@@ -7,12 +7,12 @@ namespace GameEngine
     public class HistoryShot
     {
         public int playerShooting;
-        public (int, int) from;
-        public (int, int) to;
+        public ShotCoord from;
+        public ShotCoord to;
 
-        public ShotType.Type type;
+        public ShotType type;
 
-        public HistoryShot(int playerShooting, (int, int) from, (int, int) to, ShotType.Type type){
+        public HistoryShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type){
             this.playerShooting = playerShooting;
             this.from = from;
             this.to = to;

@@ -24,8 +24,6 @@ namespace GameEngine
 
         private bool isPaused = true;
 
-        private int playerServing = 0;
-
         public PointHistory pointHistory;
 
         void Awake()
@@ -68,13 +66,11 @@ namespace GameEngine
             scoreDisplay.SetScoreRecap(score.GetScoreRecap());
         }
 
-        private void FieldShot(int playerShooting, (int, int) from, (int, int) to){
-            int indexFrom = Maths.GetIndexForCoord(from);
-            int indexTo = Maths.GetIndexForCoord(to);
-            field.DoAShot(indexFrom, indexTo, playerShooting);
+        private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to){
+            field.DoAShot(from.Index, to.Index, playerShooting);
         }
 
-        private void PositionTwoPlayersBeforeServe(int playerServing, ((int, int),(int, int)) positions){
+        private void PositionTwoPlayersBeforeServe(int playerServing, (ShotCoord,ShotCoord) positions){
             field.PositionPlayers(playerServing, positions);
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GameEngine
 {
-    public class ShotCoordProbabilities : Probabilities<(int, int)>
+    public class ShotCoordProbabilities : Probabilities<ShotCoord>
     {
         //CONSTANTS
         private static readonly float[] DEFAULT_COORD_TENDENCIES = { 11f, 11f, 11f, 11f, 12f, 11f, 11f, 11f, 11f };
@@ -27,21 +27,23 @@ namespace GameEngine
 
         protected override void SetAssociatedResults()
         {
-            associatedResults = new (int, int)[] { (0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (2, 2) };
+            associatedResults = new ShotCoord[] { new ShotCoord((0, 0)), new ShotCoord((1, 0)), new ShotCoord((2, 0)), 
+            new ShotCoord((0, 1)), new ShotCoord((1, 1)), new ShotCoord((2, 1)), 
+            new ShotCoord((0, 2)), new ShotCoord((1, 2)), new ShotCoord((2, 2)) };
         }
 
 
-        public static ShotCoordProbabilities GetShotTypeCoordProbabilities(ShotType.Type type)
+        public static ShotCoordProbabilities GetShotTypeCoordProbabilities(ShotType type)
         {
             switch (type)
             {
-                case ShotType.Type.LONG:
+                case ShotType.LONG:
                     return LongCoordProbabilities();
-                case ShotType.Type.RUSH:
+                case ShotType.RUSH:
                     return RushCoordProbabilities();
-                case ShotType.Type.SMASH:
+                case ShotType.SMASH:
                     return SmashCoordProbabilities();
-                case ShotType.Type.SHORT:
+                case ShotType.SHORT:
                     return ShortCoordProbabilities();
             }
             return new ShotCoordProbabilities();

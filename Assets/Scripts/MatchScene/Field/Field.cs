@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Shapes;
 using DG.Tweening;
+using GameEngine;
 
 public class Field : MonoBehaviour
 {
@@ -34,22 +35,22 @@ public class Field : MonoBehaviour
 
     public void DoARandomGreen(int player){
         if(player == 0){
-            playerSide.GreenTile(Maths.RandCoord());
+            playerSide.GreenTile(new ShotCoord(Maths.RandCoord()));
         }else{
-            cpuSide.GreenTile(Maths.RandCoord());
+            cpuSide.GreenTile(new ShotCoord(Maths.RandCoord()));
         }
     } 
 
     public void DoARandomRed(int player){
         if(player == 0){
-            playerSide.RedTile(Maths.RandCoord());
+            playerSide.RedTile(new ShotCoord(Maths.RandCoord()));
         }else{
-            cpuSide.RedTile(Maths.RandCoord());
+            cpuSide.RedTile(new ShotCoord(Maths.RandCoord()));
         }
     } 
 
 
-    public void DoAGreen(int player, (int, int) coord){
+    public void DoAGreen(int player, ShotCoord coord){
         if(player == 0){
             playerSide.GreenTile(coord);
         }else{
@@ -57,7 +58,7 @@ public class Field : MonoBehaviour
         }
     } 
 
-    public void DoARed(int player, (int, int) coord){
+    public void DoARed(int player, ShotCoord coord){
         if(player == 0){
             playerSide.RedTile(coord);
         }else{
@@ -98,9 +99,9 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void PositionPlayers(int playerServing, ((int, int),(int, int)) positions){
-        int position1Index = Maths.GetIndexForCoord(positions.Item1);
-        int position2Index = Maths.GetIndexForCoord(positions.Item2);
+    public void PositionPlayers(int playerServing, (ShotCoord,ShotCoord) positions){
+        int position1Index = positions.Item1.Index;
+        int position2Index = positions.Item2.Index;
         if(playerServing==0){
             MovePlayer(player,p1SideCoordinates[position1Index],true);
             MovePlayer(cpu,cpuSideCoordinates[position2Index],true);

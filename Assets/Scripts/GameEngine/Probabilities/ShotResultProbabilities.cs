@@ -49,17 +49,17 @@ namespace GameEngine
             associatedResults = new ShotResult[] { ShotResult.CRIT, ShotResult.NORMAL, ShotResult.FAIL };
         }
 
-        public static ShotResultProbabilities GetShotTypeResultProbabilities(ShotType.Type type)
+        public static ShotResultProbabilities GetShotTypeResultProbabilities(ShotType type)
         {
             switch (type)
             {
-                case ShotType.Type.LONG:
+                case ShotType.LONG:
                     return LongResultProbabilities();
-                case ShotType.Type.RUSH:
+                case ShotType.RUSH:
                     return RushResultProbabilities();
-                case ShotType.Type.SMASH:
+                case ShotType.SMASH:
                     return SmashResultProbabilities();
-                case ShotType.Type.SHORT:
+                case ShotType.SHORT:
                     return ShortResultProbabilities();
             }
             return new ShotResultProbabilities();

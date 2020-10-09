@@ -9,9 +9,11 @@ namespace GameEngine
         public Shot currentShot;
         public int currentPlayerShooting;
 
+        public int currentPlayerServing;
+
         private List<HistoryShot> shotHistory;
 
-        public Point(int playerServing, Score score, PointHistory history)
+        public Point(Score score, PointHistory history)
         {
             shotHistory = new List<HistoryShot>();
             pointOver = false;
@@ -19,12 +21,14 @@ namespace GameEngine
             //TODO TOSS RIGHT THERE
             if (history.FirstPoint())
             {
-                Serve serve = new Serve(0, score);
+                currentPlayerServing = 0;
+                Serve serve = ShotMaker.CreateServe(currentPlayerServing, score);
                 currentShot = serve;
             }
             else
             {
-                Serve serve = new Serve(history.GetLastPointWinner(), score);
+                currentPlayerServing = history.GetLastPointWinner();
+                Serve serve = ShotMaker.CreateServe(currentPlayerServing, score);
                 currentShot = serve;
             }
         }
@@ -33,7 +37,7 @@ namespace GameEngine
         {
             if (shotHistory.Count == 0) return;
             currentPlayerShooting = (currentPlayerShooting == 0) ? 1 : 0;
-            Shot shot = new Shot(currentPlayerShooting, currentShot);
+            Shot shot = ShotMaker.CreateShot(currentPlayerShooting, currentShot);
             currentShot = shot;
         }
 
@@ -55,8 +59,8 @@ namespace GameEngine
             shotHistory.Add(currentShot.GetHistoryShot());
         }
 
-        public ((int, int), (int, int)) GetServingPositions(){
-            return ((Serve)currentShot).GetPlayerIntialPositions();
+        public (ShotCoord, ShotCoord) GetServingPositions(Score score){
+            return ShotMaker.GetPlayerIntialPositions(currentPlayerServing,score);
         }
     }
 }
