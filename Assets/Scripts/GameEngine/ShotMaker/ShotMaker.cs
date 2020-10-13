@@ -5,21 +5,25 @@ namespace GameEngine
 {
     public static class ShotMaker
     {
-        public static Shot CreateShot(int playerShooting, Shot previousShot){
+
+        private static readonly float ADVANTAGE_CRIT = 10;
+        private static readonly float DISADVANTAGE_FAIL = 10;
+        public static Shot CreateShot(int playerShooting, Shot previousShot, Advantage advantage){
             PlayerMatchInstance player = MatchEngine.Instance.GetPlayer(playerShooting);
             ShotType type = player.ShotTypeProbabilities().Calculate();
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
-            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(type);
+            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type, advantage);
             return new Shot(playerShooting, type, from, to, shotResultProbabilities, false);
         }
 
         public static Serve CreateServe(int playerShooting, Score score){
+            PlayerMatchInstance player = MatchEngine.Instance.GetPlayer(playerShooting);
             int points = GetPlayerServingPoints(playerShooting,score);
             ShotCoord from = GetFromForServing(points);
             ShotCoord to = GetToForServing(points);
             ShotType type = ShotType.LONG;
-            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(type);
+            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type);
             return new Serve(playerShooting, type, from, to, shotResultProbabilities);
         }
 
@@ -49,8 +53,21 @@ namespace GameEngine
         //                                                  SHOT RESULTS
         //------------------------------------------------------------------------------------------------------------------
 
-        private static ShotResultProbabilities GenerateShotResultProbabilities(ShotType type){
+        private static ShotResultProbabilities GenerateShotResultProbabilities(int playerShooting, ShotType type){
             return ShotResultProbabilities.GetShotTypeResultProbabilities(type);
+        }
+
+        private static ShotResultProbabilities GenerateShotResultProbabilities(int playerShooting, ShotType type, Advantage advantage){
+            ShotResultProbabilities typeProbabilities = ShotResultProbabilities.GetShotTypeResultProbabilities(type);
+            
+            if(advantage.Player == playerShooting){
+                typeProbabilities.AddCrit(ADVANTAGE_CRIT*advantage.Amount);
+            }else{
+                typeProbabilities.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
+            }
+            Debug.Log("AFTER");
+            typeProbabilities.Log();
+            return typeProbabilities;
         }
 
         //------------------------------------------------------------------------------------------------------------------

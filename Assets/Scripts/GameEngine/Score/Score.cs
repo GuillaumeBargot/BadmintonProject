@@ -76,11 +76,11 @@ namespace GameEngine
         {
             if (playerID == 0)
             {
-                PointPlayer1();
+                PointPlayer2();
             }
             else
             {
-                PointPlayer2();
+                PointPlayer1();
             }
         }
 

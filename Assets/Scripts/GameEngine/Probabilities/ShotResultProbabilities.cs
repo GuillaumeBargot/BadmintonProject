@@ -6,15 +6,15 @@ namespace GameEngine
     public class ShotResultProbabilities : Probabilities<ShotResult>
     {
         //CONSTANTS
-        public static readonly float[] BASE_PROBABILITIES = new float[]{10.0f,80.0f,10.0f};
+        public static float[] BASE_PROBABILITIES => new float[]{10.0f,90.0f,0f};
 
-        private static readonly float[] LONG_RESULT_PROBABILITIES = { 2f,90f,8f };
+        private static float[] LONG_RESULT_PROBABILITIES => new float[]{ 5f,95f,0f };
 
-        private static readonly float[] RUSH_RESULT_PROBABILITIES = { 10f,75f,15f };
+        private static float[] RUSH_RESULT_PROBABILITIES => new float[]{ 8f,92f,0f };
 
-        private static readonly float[] SMASH_RESULT_PROBABILITIES = { 25f,55f,20f};
+        private static float[] SMASH_RESULT_PROBABILITIES => new float[]{ 15f,85f,0f};
 
-        private static readonly float[] SHORT_RESULT_PROBABILITIES = { 25f,55f,20f };
+        private static float[] SHORT_RESULT_PROBABILITIES => new float[]{ 15f,85f,0f };
 
         //PUBLIC GETTERS
         public float Crit{
@@ -71,6 +71,42 @@ namespace GameEngine
             float randomCrit = Random.Range(1, 49);
             float randomNormal = 100 - randomCrit - randomFail;
             return new ShotResultProbabilities(new float[]{randomCrit, randomNormal, randomFail});
+        }
+
+        public void AddCrit(float addedCrit){
+            if(Crit+addedCrit>100 || Crit+addedCrit < 0) return;
+            //First add the added crit onto the crit.
+            probabilities[0] = probabilities[0] + addedCrit;
+
+            if(Normal<addedCrit){
+                //Weird behaviour, there is no "normal" left for "crit" to be added into. You have to start cronching some of "fail" percentages
+                float remainingAddedCrit = addedCrit - Normal;
+                probabilities[1] = 0;
+                probabilities[2] = probabilities[2] - remainingAddedCrit;
+            }else{
+                //Normal behaviour, we borrow some percentages from the "normal" case to add some "crit".
+                probabilities[1] = probabilities[1] - addedCrit;
+            }
+        }
+
+        public void AddFail(float addedFail){
+            if(Fail+addedFail>100 || Fail+addedFail < 0) return;
+            //First add the added crit onto the crit.
+            probabilities[2] = probabilities[2] + addedFail;
+
+            if(Normal<addedFail){
+                //Weird behaviour, there is no "normal" left for "crit" to be added into. You have to start cronching some of "fail" percentages
+                float remainingAddedFail = addedFail - Normal;
+                probabilities[1] = 0;
+                probabilities[0] = probabilities[0] - remainingAddedFail;
+            }else{
+                //Normal behaviour, we borrow some percentages from the "normal" case to add some "crit".
+                probabilities[1] = probabilities[1] - addedFail;
+            }
+        }
+
+        public void Log(){
+            Debug.Log("ShotResultProbs: " + Crit + "% / " + Normal + "% / " + Fail + "%");
         }
     }
 }

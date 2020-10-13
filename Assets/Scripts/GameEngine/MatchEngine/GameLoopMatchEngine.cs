@@ -59,11 +59,13 @@ namespace GameEngine
             {
                 case ShotResult.CRIT:
                     Debug.Log(currentPMI.Name() + " crits  a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
-                    score.ScoreFor(currentPoint.currentPlayerShooting);
+                    //score.ScoreFor(currentPoint.currentPlayerShooting);
+                    currentPoint.advantage.AddAdvantage(currentPoint.currentPlayerShooting);
+                    UpdateAdvantageUI(currentPoint.advantage);
                     //FieldCritResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
-                    RefreshScoreRecap();
-                    currentPoint.pointOver = true;
+                    //RefreshScoreRecap();
+                    //currentPoint.pointOver = true;
                     break;
                 case ShotResult.FAIL:
                     Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
@@ -90,6 +92,7 @@ namespace GameEngine
         {
             //Do something after the end of the point. Like store the point in the point history
             pointHistory.AddHistoryPoint(currentPoint.GetHistoryPoint());
+            ResetAdvantageUI();
         }
     }
 

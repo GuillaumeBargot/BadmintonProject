@@ -10,6 +10,7 @@ namespace GameEngine
         public int currentPlayerShooting;
 
         public int currentPlayerServing;
+        public Advantage advantage;
 
         private List<HistoryShot> shotHistory;
 
@@ -17,6 +18,7 @@ namespace GameEngine
         {
             shotHistory = new List<HistoryShot>();
             pointOver = false;
+            advantage = new Advantage();
 
             //TODO TOSS RIGHT THERE
             if (history.FirstPoint())
@@ -37,7 +39,7 @@ namespace GameEngine
         {
             if (shotHistory.Count == 0) return;
             currentPlayerShooting = (currentPlayerShooting == 0) ? 1 : 0;
-            Shot shot = ShotMaker.CreateShot(currentPlayerShooting, currentShot);
+            Shot shot = ShotMaker.CreateShot(currentPlayerShooting, currentShot, advantage);
             currentShot = shot;
         }
 

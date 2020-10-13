@@ -12,6 +12,9 @@ namespace GameEngine
         [SerializeField]
         PlayButton playButton;
 
+        [SerializeField]
+        AdvantageBar advantageBar;
+
         
         public void PlayOrPause()
         {
@@ -35,6 +38,14 @@ namespace GameEngine
         {
             isPaused = false;
             playButton.OnStatePlaying();
+        }
+
+        private void UpdateAdvantageUI(Advantage advantage){
+            advantageBar.UpdateAdvantage(advantage);
+        }
+
+        private void ResetAdvantageUI(){
+            advantageBar.Reset();
         }
     }
 }
