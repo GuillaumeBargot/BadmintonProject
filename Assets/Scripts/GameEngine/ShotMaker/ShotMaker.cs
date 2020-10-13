@@ -65,8 +65,6 @@ namespace GameEngine
             }else{
                 typeProbabilities.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
             }
-            Debug.Log("AFTER");
-            typeProbabilities.Log();
             return typeProbabilities;
         }
 

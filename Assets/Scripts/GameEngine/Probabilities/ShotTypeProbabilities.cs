@@ -6,7 +6,7 @@ namespace GameEngine
     public class ShotTypeProbabilities : Probabilities<ShotType>
     {
         //CONSTANTS
-        private readonly static float[] BASE_PROBABILITIES = new float[]{40,20,10,30};
+        private static float[] BASE_PROBABILITIES => new float[]{40,20,10,30};
 
         // CONSTRUCTORS
         public ShotTypeProbabilities() : base (BASE_PROBABILITIES){}

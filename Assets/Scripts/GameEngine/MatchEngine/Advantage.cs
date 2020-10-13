@@ -22,7 +22,6 @@ namespace GameEngine
         }
 
         public void AddAdvantage(int player){
-            Debug.Log("Adding advantage to " + player);
             if(whichPlayer==player){
                 if(amount<3){
                     amount++;

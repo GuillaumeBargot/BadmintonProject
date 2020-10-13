@@ -6,15 +6,15 @@ namespace GameEngine
     public class ShotCoordProbabilities : Probabilities<ShotCoord>
     {
         //CONSTANTS
-        private static readonly float[] DEFAULT_COORD_TENDENCIES = { 11f, 11f, 11f, 11f, 12f, 11f, 11f, 11f, 11f };
+        private static float[] DEFAULT_COORD_TENDENCIES => new float[] { 11f, 11f, 11f, 11f, 12f, 11f, 11f, 11f, 11f };
 
-        private static readonly float[] LONG_COORD_PROBABILITIES = { 0f, 0f, 0f, 0f, 0f, 0f, 33f, 34f, 33f };
+        private static float[] LONG_COORD_PROBABILITIES => new float[]{ 0f, 0f, 0f, 0f, 0f, 0f, 33f, 34f, 33f };
 
-        private static readonly float[] RUSH_COORD_PROBABILITIES = { 0f, 0f, 0f, 17f, 17f, 17f, 16f, 17f, 16f };
+        private static float[] RUSH_COORD_PROBABILITIES => new float[]{ 0f, 0f, 0f, 17f, 17f, 17f, 16f, 17f, 16f };
 
-        private static readonly float[] SMASH_COORD_PROBABILITIES = { 0, 0, 0, 33, 34, 33, 0, 0, 0 };
+        private static float[] SMASH_COORD_PROBABILITIES => new float[]{ 0, 0, 0, 33, 34, 33, 0, 0, 0 };
 
-        private static readonly float[] SHORT_COORD_PROBABILITIES = { 33f, 34f, 33f, 0f, 0f, 0f, 0f, 0f, 0f };
+        private static float[] SHORT_COORD_PROBABILITIES => new float[]{ 33f, 34f, 33f, 0f, 0f, 0f, 0f, 0f, 0f };
 
         // CONSTRUCTORS
         public ShotCoordProbabilities() : base(DEFAULT_COORD_TENDENCIES) { }
