@@ -66,7 +66,7 @@ public class Field : MonoBehaviour
         }
     } 
 
-    public void DoAShot(int indexFrom, int indexTo, int playerShooting){
+    public void DoAShot(int indexFrom, int indexTo, int playerShooting, ShotType type){
         Vector3 from = new Vector3();
         Vector3 to = new Vector3();
         if(playerShooting==0){
@@ -80,14 +80,16 @@ public class Field : MonoBehaviour
             MovePlayer(player, to, false);
             MovePlayer(cpu,from, true);
         }
-        AnimateShot(from,to);
+        AnimateShot(from,to, type);
     }
 
-    private void AnimateShot(Vector3 from, Vector3 to){
+    private void AnimateShot(Vector3 from, Vector3 to, ShotType type){
         Line shotLine = Instantiate(shotLinePrefab,Vector3.zero, Quaternion.identity, shotLineParent);
+        
         shotLine.transform.localPosition = Vector3.zero;
         shotLine.Start = from;
         shotLine.End = from;
+        shotLine.Color = ShotColor.GetColorForType(type);
         DOTween.To(()=> shotLine.End, x=> shotLine.End = x, to, 0.25f).SetEase(Ease.InFlash).OnComplete(()=>Destroy(shotLine.gameObject));
     }
 

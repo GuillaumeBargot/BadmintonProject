@@ -63,7 +63,7 @@ namespace GameEngine
                     currentPoint.advantage.AddAdvantage(currentPoint.currentPlayerShooting);
                     UpdateAdvantageUI(currentPoint.advantage);
                     //FieldCritResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
-                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
+                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to, currentPoint.currentShot.type);
                     CritMessage(currentPoint.currentPlayerShooting);
                     //RefreshScoreRecap();
                     //currentPoint.pointOver = true;
@@ -72,12 +72,12 @@ namespace GameEngine
                     Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     score.ScoreAgainst(currentPoint.currentPlayerShooting);
                     //FieldFailResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
-                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
+                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to,currentPoint.currentShot.type);
                     RefreshScoreRecap();
                     currentPoint.pointOver = true;
                     break;
                 default:
-                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
+                    FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to,currentPoint.currentShot.type);
                     Debug.Log(currentPMI.Name() + " returns a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     break;
             }
