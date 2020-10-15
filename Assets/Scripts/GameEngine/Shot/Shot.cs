@@ -18,6 +18,8 @@ namespace GameEngine
         //Type of the shot.
         public ShotType type;
 
+        public float shotTime;
+
         public bool isServe = false;
 
         public int playerShooting;
@@ -25,13 +27,14 @@ namespace GameEngine
         public ShotResult shotResult;
 
         //Constructor to be used by ShotMaker
-        public Shot(int playerShooting, ShotType type, ShotCoord from, ShotCoord to, ShotResultProbabilities shotResultProbabilities, bool isServe)
+        public Shot(int playerShooting, ShotType type, ShotCoord from, ShotCoord to, ShotResultProbabilities shotResultProbabilities, bool isServe, float shotTime)
         {
             this.playerShooting = playerShooting;
             this.type = type;
             this.from = from;
             this.to = to;
             this.shotResultProbabilities = shotResultProbabilities;
+            this.shotTime = shotTime;
         }
 
         public void ComputeShot()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameEngine;
-public class ShotColor
+public static class FieldShotColor
 {
     private static Color32 shortColor = new Color32(76,175,80,255);
     private static Color32 longColor = new Color32(63,81,181,255);

@@ -14,7 +14,8 @@ namespace GameEngine
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
             ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type, advantage);
-            return new Shot(playerShooting, type, from, to, shotResultProbabilities, false);
+            float shotTime = ShotTime.GetTimeForType(type);
+            return new Shot(playerShooting, type, from, to, shotResultProbabilities, false, shotTime);
         }
 
         public static Serve CreateServe(int playerShooting, Score score){
@@ -24,7 +25,8 @@ namespace GameEngine
             ShotCoord to = GetToForServing(points);
             ShotType type = ShotType.LONG;
             ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type);
-            return new Serve(playerShooting, type, from, to, shotResultProbabilities);
+            float shotTime = ShotTime.GetTimeForType(type);
+            return new Serve(playerShooting, type, from, to, shotResultProbabilities, shotTime);
         }
 
         //------------------------------------------------------------------------------------------------------------------

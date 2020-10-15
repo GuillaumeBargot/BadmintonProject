@@ -5,7 +5,7 @@ namespace GameEngine
 {
     public class Serve : Shot
     {
-        public Serve(int playerShooting, ShotType type, ShotCoord from, ShotCoord to, ShotResultProbabilities shotResultProbabilities)
-            : base(playerShooting, type, from, to, shotResultProbabilities, true){}
+        public Serve(int playerShooting, ShotType type, ShotCoord from, ShotCoord to, ShotResultProbabilities shotResultProbabilities, float shotTime)
+            : base(playerShooting, type, from, to, shotResultProbabilities, true, shotTime){}
     }
 }

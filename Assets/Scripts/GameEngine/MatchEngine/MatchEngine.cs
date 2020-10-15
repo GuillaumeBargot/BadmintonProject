@@ -66,8 +66,8 @@ namespace GameEngine
             scoreDisplay.SetScoreRecap(score.GetScoreRecap());
         }
 
-        private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type){
-            field.DoAShot(from.Index, to.Index, playerShooting, type);
+        private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type, float shotTime){
+            field.DoAShot(from.Index, to.Index, playerShooting, type, shotTime);
         }
 
         private void PositionTwoPlayersBeforeServe(int playerServing, (ShotCoord,ShotCoord) positions){

@@ -66,36 +66,36 @@ public class Field : MonoBehaviour
         }
     } 
 
-    public void DoAShot(int indexFrom, int indexTo, int playerShooting, ShotType type){
+    public void DoAShot(int indexFrom, int indexTo, int playerShooting, ShotType type, float shotTime){
         Vector3 from = new Vector3();
         Vector3 to = new Vector3();
         if(playerShooting==0){
             from = p1SideCoordinates[indexFrom];
             to = cpuSideCoordinates[indexTo];
-            MovePlayer(player,from, true);
-            MovePlayer(cpu,to, false);
+            MovePlayer(player,from, true, shotTime);
+            MovePlayer(cpu,to, false, shotTime);
         }else{
             from = cpuSideCoordinates[indexFrom];
             to = p1SideCoordinates[indexTo];
-            MovePlayer(player, to, false);
-            MovePlayer(cpu,from, true);
+            MovePlayer(player, to, false, shotTime);
+            MovePlayer(cpu,from, true, shotTime);
         }
-        AnimateShot(from,to, type);
+        AnimateShot(from,to, type, shotTime);
     }
 
-    private void AnimateShot(Vector3 from, Vector3 to, ShotType type){
+    private void AnimateShot(Vector3 from, Vector3 to, ShotType type, float shotTime){
         Line shotLine = Instantiate(shotLinePrefab,Vector3.zero, Quaternion.identity, shotLineParent);
         
         shotLine.transform.localPosition = Vector3.zero;
         shotLine.Start = from;
         shotLine.End = from;
-        shotLine.Color = ShotColor.GetColorForType(type);
-        DOTween.To(()=> shotLine.End, x=> shotLine.End = x, to, 0.25f).SetEase(Ease.InFlash).OnComplete(()=>Destroy(shotLine.gameObject));
+        shotLine.Color = FieldShotColor.GetColorForType(type);
+        DOTween.To(()=> shotLine.End, x=> shotLine.End = x, to, shotTime).SetEase(FieldShotEase.GetEaseForType(type)).OnComplete(()=>Destroy(shotLine.gameObject));
     }
 
-    private void MovePlayer(Disc disc, Vector3 to, bool instant){
+    private void MovePlayer(Disc disc, Vector3 to, bool instant, float shotTime){
         if(!instant){
-            disc.transform.DOLocalMove(to,0.25f).SetEase(Ease.InCirc);
+            disc.transform.DOLocalMove(to,shotTime).SetEase(Ease.InCirc);
         }else{
             disc.transform.localPosition = to;
         }
@@ -105,11 +105,11 @@ public class Field : MonoBehaviour
         int position1Index = positions.Item1.Index;
         int position2Index = positions.Item2.Index;
         if(playerServing==0){
-            MovePlayer(player,p1SideCoordinates[position1Index],true);
-            MovePlayer(cpu,cpuSideCoordinates[position2Index],true);
+            MovePlayer(player,p1SideCoordinates[position1Index],true, 0f);
+            MovePlayer(cpu,cpuSideCoordinates[position2Index],true, 0f);
         }else{
-            MovePlayer(cpu, cpuSideCoordinates[position1Index], true);
-            MovePlayer(player, p1SideCoordinates[position2Index], true);
+            MovePlayer(cpu, cpuSideCoordinates[position1Index], true, 0f);
+            MovePlayer(player, p1SideCoordinates[position2Index], true, 0f);
         }
     }
 }
