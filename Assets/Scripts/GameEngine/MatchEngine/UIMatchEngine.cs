@@ -15,6 +15,9 @@ namespace GameEngine
         [SerializeField]
         AdvantageBar advantageBar;
 
+        [SerializeField]
+        MessageSystem messageSystem;
+
         
         public void PlayOrPause()
         {
@@ -46,6 +49,10 @@ namespace GameEngine
 
         private void ResetAdvantageUI(){
             advantageBar.Reset();
+        }
+
+        private void CritMessage(int playerShooting){
+            messageSystem.CritMessage(playerShooting);
         }
     }
 }

@@ -64,6 +64,7 @@ namespace GameEngine
                     UpdateAdvantageUI(currentPoint.advantage);
                     //FieldCritResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to);
+                    CritMessage(currentPoint.currentPlayerShooting);
                     //RefreshScoreRecap();
                     //currentPoint.pointOver = true;
                     break;

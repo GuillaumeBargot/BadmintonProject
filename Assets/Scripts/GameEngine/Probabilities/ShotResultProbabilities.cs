@@ -74,34 +74,88 @@ namespace GameEngine
         }
 
         public void AddCrit(float addedCrit){
-            if(Crit+addedCrit>100 || Crit+addedCrit < 0) return;
-            //First add the added crit onto the crit.
-            probabilities[0] = probabilities[0] + addedCrit;
-
-            if(Normal<addedCrit){
-                //Weird behaviour, there is no "normal" left for "crit" to be added into. You have to start cronching some of "fail" percentages
-                float remainingAddedCrit = addedCrit - Normal;
-                probabilities[1] = 0;
-                probabilities[2] = probabilities[2] - remainingAddedCrit;
+            if(addedCrit>=0){
+                AddPositiveCrit(addedCrit);
             }else{
-                //Normal behaviour, we borrow some percentages from the "normal" case to add some "crit".
-                probabilities[1] = probabilities[1] - addedCrit;
+                AddNegativeCrit(addedCrit);
+            }
+        }
+
+        private void AddPositiveCrit(float addedCrit){
+            if(Crit + addedCrit >= 100){
+                probabilities[0] = 100.0f;
+                probabilities[1] = 0;
+                probabilities[2] = 0;
+            }else{
+                if(Normal == 0){
+                    probabilities[0] += addedCrit;
+                    probabilities[2] -= addedCrit;
+                }else{
+                    if(Normal-addedCrit>=0){
+                        probabilities[0] += addedCrit;
+                        probabilities[1] -= addedCrit;
+                    }else{
+                        float remainder = addedCrit - Normal;
+                        probabilities[0] += addedCrit;
+                        probabilities[1] = 0;
+                        probabilities[2] -= remainder;
+                    }
+                }
+            }
+        }
+
+        private void AddNegativeCrit(float addedCrit){
+            if(Crit == 0f) return;
+            if(Crit + addedCrit <= 0f){
+                float remainder = - addedCrit - Crit;
+                probabilities[0] = remainder;
+                probabilities[1] -= addedCrit;
+            }else{
+                probabilities[0] += addedCrit;
+                probabilities[1] -= addedCrit;
             }
         }
 
         public void AddFail(float addedFail){
-            if(Fail+addedFail>100 || Fail+addedFail < 0) return;
-            //First add the added crit onto the crit.
-            probabilities[2] = probabilities[2] + addedFail;
-
-            if(Normal<addedFail){
-                //Weird behaviour, there is no "normal" left for "crit" to be added into. You have to start cronching some of "fail" percentages
-                float remainingAddedFail = addedFail - Normal;
-                probabilities[1] = 0;
-                probabilities[0] = probabilities[0] - remainingAddedFail;
+            if(addedFail>=0){
+                AddPositiveFail(addedFail);
             }else{
-                //Normal behaviour, we borrow some percentages from the "normal" case to add some "crit".
-                probabilities[1] = probabilities[1] - addedFail;
+                AddNegativeFail(addedFail);
+            }
+        }
+
+        private void AddPositiveFail(float addedFail){
+            if(Fail + addedFail >= 100){
+                probabilities[2] = 100.0f;
+                probabilities[1] = 0;
+                probabilities[0] = 0;
+            }else{
+                if(Normal == 0){
+                    probabilities[2] += addedFail;
+                    probabilities[0] -= addedFail;
+                }else{
+                    if(Normal-addedFail>=0){
+                        probabilities[2] += addedFail;
+                        probabilities[1] -= addedFail;
+                    }else{
+                        float remainder = addedFail - Normal;
+                        probabilities[2] += addedFail;
+                        probabilities[1] = 0;
+                        probabilities[0] -= remainder;
+                    }
+                }
+            }
+        }
+
+        private void AddNegativeFail(float addedFail){
+            if(Fail == 0f) return;
+            if(Fail + addedFail <= 0f){
+                float remainder = - addedFail - Fail;
+                probabilities[2] = remainder;
+                probabilities[1] -= addedFail;
+            }else{
+                probabilities[2] += addedFail;
+                probabilities[1] -= addedFail;
             }
         }
 

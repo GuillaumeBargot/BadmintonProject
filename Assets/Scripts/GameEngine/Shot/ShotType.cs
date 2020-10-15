@@ -11,20 +11,4 @@ namespace GameEngine
         SHORT = 3
     }
 
-
-
-    /*public static string GetName(Type type){
-        switch(type){
-            case Type.LONG:
-                return "Long Shot";
-            case Type.RUSH:
-                return "Rush";
-            case Type.SMASH:
-                return "Smash";
-            case Type.SHORT:
-                return "Short Shot";
-        }
-        return "Unknown Shot";
-    }*/
-
 }
