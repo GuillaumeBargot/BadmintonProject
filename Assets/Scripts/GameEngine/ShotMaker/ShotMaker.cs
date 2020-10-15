@@ -10,7 +10,7 @@ namespace GameEngine
         private static readonly float DISADVANTAGE_FAIL = 10;
         public static Shot CreateShot(int playerShooting, Shot previousShot, Advantage advantage){
             PlayerMatchInstance player = MatchEngine.Instance.GetPlayer(playerShooting);
-            ShotType type = player.ShotTypeProbabilities().Calculate();
+            ShotType type = GenerateShotTypeProbabilities(previousShot.type,player).Calculate();
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
             ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type, advantage);
@@ -88,12 +88,17 @@ namespace GameEngine
             return tendencies.Calculate();
         }
 
+        public static ShotCoordProbabilities GetCoordTendencies(ShotType type){
+            return ShotCoordProbabilities.GetShotTypeCoordProbabilities(type);
+        }
+
         //------------------------------------------------------------------------------------------------------------------
         //                                                  SHOT TYPES
         //------------------------------------------------------------------------------------------------------------------
 
-        public static ShotCoordProbabilities GetCoordTendencies(ShotType type){
-            return ShotCoordProbabilities.GetShotTypeCoordProbabilities(type);
+        public static ShotTypeProbabilities GenerateShotTypeProbabilities(ShotType previousType, PlayerMatchInstance player){
+            return ShotTypeProbabilities.GetShotTypeProbabilitiesFollowing(previousType);
         }
+        
     }
 }
