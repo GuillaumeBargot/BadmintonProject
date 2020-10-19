@@ -18,6 +18,9 @@ namespace GameEngine
         [SerializeField]
         MessageSystem messageSystem;
 
+        [SerializeField]
+        DefensivePopup defensivePopupPrefab;
+
         
         public void PlayOrPause()
         {
@@ -53,6 +56,10 @@ namespace GameEngine
 
         private void CritMessage(int playerShooting){
             messageSystem.CritMessage(playerShooting);
+        }
+
+        public void OnDefenseClick(){
+            PopupSystem.Instance.InstantiatePopup<DefensivePopup>(defensivePopupPrefab);
         }
     }
 }
