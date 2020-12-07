@@ -20,7 +20,6 @@ public class Popup : MonoBehaviour
     }
 
     private void ClosePopup(){
-        Debug.Log("ClosePopup");
         parentPopupSystem.ClosePopup(this);
     }
 }

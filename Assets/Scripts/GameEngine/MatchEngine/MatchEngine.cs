@@ -60,6 +60,10 @@ namespace GameEngine
             return (playerID == 0) ? player : cpu;
         }
 
+        public PlayerMatchInstance GetOtherPlayer(int playerID){
+            return (playerID == 0) ? cpu : player;
+        }
+
         private void RefreshScoreRecap()
         {
             score.LogScore();

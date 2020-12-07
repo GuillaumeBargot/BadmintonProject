@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public static class ArrayExtensions
 {
@@ -11,6 +12,12 @@ public static class ArrayExtensions
             arr[i] = value;
         }
 
+        return arr;
+    }
+
+    public static T[] Add<T>(this T[] arr, T value){
+        Array.Resize(ref arr, arr.Length + 1);
+        arr[arr.GetUpperBound(0)] = value;
         return arr;
     }
 

@@ -1,0 +1,8 @@
+﻿
+public enum ModifierName {
+    //CRIT CHANCE ON YOUR SHOTS
+    ADDED_CRIT_ON_SMASH,
+    ADDED_CRIT_ON_LONG,
+    ADDED_CRIT_ON_SHORT,
+    ADDED_CRIT_ON_RUSH
+}

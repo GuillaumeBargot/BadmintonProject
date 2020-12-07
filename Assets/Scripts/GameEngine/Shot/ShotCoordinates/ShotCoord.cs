@@ -36,6 +36,10 @@ namespace GameEngine
             coordinates = coord;
         }
 
+        public ShotCoord(int index){
+            coordinates = Maths.GetCoordForIndex(index);
+        }
+
     }
 
 }

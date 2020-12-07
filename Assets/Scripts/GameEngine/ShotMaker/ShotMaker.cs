@@ -8,12 +8,14 @@ namespace GameEngine
 
         private static readonly float ADVANTAGE_CRIT = 10;
         private static readonly float DISADVANTAGE_FAIL = 10;
+
+        private static readonly float DEFENDED_CRIT = -5;
         public static Shot CreateShot(int playerShooting, Shot previousShot, Advantage advantage){
             PlayerMatchInstance player = MatchEngine.Instance.GetPlayer(playerShooting);
             ShotType type = GenerateShotTypeProbabilities(previousShot.type,player).Calculate();
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
-            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type, advantage);
+            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(to,playerShooting, type, advantage);
             float shotTime = ShotTime.GetTimeForType(type);
             return new Shot(playerShooting, type, from, to, shotResultProbabilities, false, shotTime);
         }
@@ -59,15 +61,54 @@ namespace GameEngine
             return ShotResultProbabilities.GetShotTypeResultProbabilities(type);
         }
 
-        private static ShotResultProbabilities GenerateShotResultProbabilities(int playerShooting, ShotType type, Advantage advantage){
+        private static ShotResultProbabilities GenerateShotResultProbabilities(ShotCoord to, int playerShooting, ShotType type, Advantage advantage){
             ShotResultProbabilities typeProbabilities = ShotResultProbabilities.GetShotTypeResultProbabilities(type);
             
+
+            ShotResultProbabilities resultingProbabilities = ShotResultAdvantageModification(typeProbabilities, playerShooting, advantage);
+            ShotResultProbabilities afterAttackProbabilities = ShotResultAttackModification(typeProbabilities, MatchEngine.Instance.GetPlayer(playerShooting), type);
+            ShotResultProbabilities afterDefenseProbabilities = ShotResultDefenseModification(resultingProbabilities,MatchEngine.Instance.GetOtherPlayer(playerShooting), type);
+            
+            return afterDefenseProbabilities;
+        }
+
+        private static ShotResultProbabilities ShotResultAdvantageModification(ShotResultProbabilities probabilities, int playerShooting, Advantage advantage){
+            ShotResultProbabilities result = probabilities;
             if(advantage.Player == playerShooting){
-                typeProbabilities.AddCrit(ADVANTAGE_CRIT*advantage.Amount);
+                result.AddCrit(ADVANTAGE_CRIT*advantage.Amount);
             }else{
-                typeProbabilities.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
+                result.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
             }
-            return typeProbabilities;
+            return result;
+        }
+
+        private static ShotResultProbabilities ShotResultAttackModification(ShotResultProbabilities probabilities, PlayerMatchInstance playerAttacking, ShotType type){
+            ShotResultProbabilities result = probabilities;
+            switch(type){
+                case ShotType.LONG:
+                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_LONG));
+                break;
+                case ShotType.SMASH:
+                    Debug.Log("ATTACKING SMASH UPGRADE before: " + result.Crit);
+                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_SMASH));
+                    Debug.Log("ATTACKING SMASH UPGRADE before: " + result.Crit);
+                break;
+                case ShotType.RUSH:
+                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_RUSH));
+                break;
+                case ShotType.SHORT:
+                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_SHORT));
+                break;
+            }
+            return result;
+        }
+
+        private static ShotResultProbabilities ShotResultDefenseModification(ShotResultProbabilities probabilities, PlayerMatchInstance playerDefending, ShotType type){
+            ShotResultProbabilities result = probabilities;
+            /*if(defensiveStrategy.IsDefended(to)){
+                result.AddCrit(DEFENDED_CRIT);
+            }*/
+            return result;
         }
 
         //------------------------------------------------------------------------------------------------------------------
