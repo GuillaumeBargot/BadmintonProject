@@ -8,9 +8,9 @@ public class PlayerStats
     public int strength;
     public int speed;
     public int reflexes;
-    public int vision;
+    public int intelligence;
     public int dexterity;
-    public int stamina;
+    public int endurance;
 
     
 
@@ -18,9 +18,9 @@ public class PlayerStats
         strength = 1;
         speed = 1;
         reflexes = 1;
-        vision = 1;
+        intelligence = 1;
         dexterity = 1;
-        stamina = 1;
+        endurance = 1;
     }
 
 

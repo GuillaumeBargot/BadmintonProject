@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using GameEngine;
 
 public class ScriptableObjectHelper
 {
@@ -26,6 +27,10 @@ public class ScriptableObjectHelper
 
     public static Playstyle GetPlaystyleWithId(string ID){
         return GetScriptableObjectWithID<Playstyle>("Playstyles",ID);
+    }
+
+    public static ShotTypeProbabilities GetShotTypeProbabilitiesWithId(string ID){
+        return GetScriptableObjectWithID<ShotTypeProbabilities>("ShotTypeProbabilities",ID);
     }
 
     

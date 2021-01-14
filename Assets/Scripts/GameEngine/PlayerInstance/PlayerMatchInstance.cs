@@ -11,6 +11,7 @@ public class PlayerMatchInstance
 
     private Playstyle currentPlaystyle;
     private ModifierList matchInstanceModList;
+    private UsableStats usableStats;
 
     public PlayerMatchInstance(){
         player = new Player();
@@ -28,6 +29,7 @@ public class PlayerMatchInstance
         matchInstanceModList = player.modifierList;
         matchInstanceModList.MergeWith(currentPlaystyle.modifiers);
         matchInstanceModList.Log();
+        usableStats = new UsableStats(player.stats,matchInstanceModList);
     }
 
     public string Name(){
@@ -43,16 +45,16 @@ public class PlayerMatchInstance
     public int Reflexes(){
         return player.stats.reflexes;
     }
-    public int Vision(){
-        return player.stats.vision;
+    public int Intelligence(){
+        return player.stats.intelligence;
     }
 
     public int Dexterity(){
         return player.stats.dexterity;
     }
 
-    public int Stamina(){
-        return player.stats.stamina;
+    public int Endurance(){
+        return player.stats.endurance;
     }
 
     public ShotTypeProbabilities ShotTypeProbabilities(){
