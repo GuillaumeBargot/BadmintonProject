@@ -11,8 +11,11 @@ public class Player
 
     public ShotTypeProbabilities shotTypeProbabilities; 
     public ShotCoordProbabilities shotCoordProbabilities;
-
     public ModifierList modifierList;
+
+    //------------------------------------- PLAYSTYLES ---------------------------------
+    public PlaystyleDeck playstyleDeck;
+    public EquippedPlaystyles equippedPlaystyles;
 
     public Player(){
         name = "Jean Valjean";
@@ -20,6 +23,8 @@ public class Player
         shotTypeProbabilities = new ShotTypeProbabilities();
         shotCoordProbabilities = new ShotCoordProbabilities();
         modifierList = new ModifierList();
+        playstyleDeck = new PlaystyleDeck();
+        equippedPlaystyles = new EquippedPlaystyles();
     }
 
     public Player(string name){
@@ -28,5 +33,7 @@ public class Player
         shotTypeProbabilities = new ShotTypeProbabilities();
         shotCoordProbabilities = new ShotCoordProbabilities();
         modifierList = new ModifierList();
+        playstyleDeck = new PlaystyleDeck();
+        equippedPlaystyles = new EquippedPlaystyles();
     }
 }

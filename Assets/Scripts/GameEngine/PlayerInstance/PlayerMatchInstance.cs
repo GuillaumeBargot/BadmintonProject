@@ -8,20 +8,22 @@ public class PlayerMatchInstance
 
     //This is to know the stats/the behaviour of the player concerned.
     Player player;
-
+    private EquippedPlaystyles equippedPlaystyles;
     private Playstyle currentPlaystyle;
     private ModifierList matchInstanceModList;
     private UsableStats usableStats;
 
     public PlayerMatchInstance(){
         player = new Player();
-        currentPlaystyle = PlaystyleHelper.GetPlaystyle(PlaystyleHelper.NAME.AGGRESSIVE_SMASHING);
+        equippedPlaystyles = player.equippedPlaystyles;
+        currentPlaystyle = equippedPlaystyles.GetPlaystyle(0);
         RefreshModListWithPlaystyle();
     }
 
     public PlayerMatchInstance(string name){
         player = new Player(name);
-        currentPlaystyle = PlaystyleHelper.GetPlaystyle(PlaystyleHelper.NAME.AGGRESSIVE_SMASHING);
+        equippedPlaystyles = player.equippedPlaystyles;
+        currentPlaystyle = equippedPlaystyles.GetPlaystyle(0);
         RefreshModListWithPlaystyle();
     }
 
@@ -75,6 +77,10 @@ public class PlayerMatchInstance
 
     public ModifierList GetModifierList(){
         return matchInstanceModList;
+    }
+
+    public UsableStats GetUsableStats(){
+        return usableStats;
     }
 
     

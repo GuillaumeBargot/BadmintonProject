@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d4905fe75eb425ba18c519ea9e28bb, type: 3}
   m_Name: FOLLOWING_SMASH
   m_EditorClassIdentifier: 
-  id: 
+  id: FOLLOWING_SMASH
   probabilities:
   - 70
   - 0

@@ -35,6 +35,10 @@ public class ShotTypeProbabilitiesEditor : Editor
         if(id.stringValue==""){
             EditorGUILayout.LabelField("(WARNING: ID missing)");
         }
+        float sum = longProp.floatValue + rushProp.floatValue + shortProp.floatValue + smashProp.floatValue;
+        if(sum!=100){
+            EditorGUILayout.LabelField("WARNING: Sum is " + sum + " %");
+        }
 
 
         serializedObject.ApplyModifiedProperties();

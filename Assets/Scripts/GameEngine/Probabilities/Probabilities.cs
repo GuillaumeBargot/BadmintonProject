@@ -54,12 +54,14 @@ namespace GameEngine
 
         protected static float[] MergeProbabilities(float[] tendencies1, float[] tendencies2)
         {   
-            float[] resultingTendencies = tendencies1.Multiply(tendencies2);
+            float[] resultingTendencies = tendencies1.Merge(tendencies2);
+            return resultingTendencies;
+            /*float[] resultingTendencies = tendencies1.Multiply(tendencies2);
             float resultSum = resultingTendencies.Sum();
             float multiplicator = 100f / resultSum;
 
             resultingTendencies.Multiply(multiplicator);
-            return resultingTendencies;
+            return resultingTendencies;*/
         }
     }
 

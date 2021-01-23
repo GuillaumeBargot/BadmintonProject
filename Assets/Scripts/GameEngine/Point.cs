@@ -39,7 +39,7 @@ namespace GameEngine
         {
             if (shotHistory.Count == 0) return;
             currentPlayerShooting = (currentPlayerShooting == 0) ? 1 : 0;
-            Shot shot = ShotMaker.CreateShot(currentPlayerShooting, currentShot, advantage);
+            Shot shot = ShotMaker.CreateShot(currentPlayerShooting, currentShot, advantage, shotHistory[shotHistory.Count-1].type);
             currentShot = shot;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 namespace GameEngine
 {
     public static class ShotMaker
@@ -9,13 +10,18 @@ namespace GameEngine
         private static readonly float ADVANTAGE_CRIT = 10;
         private static readonly float DISADVANTAGE_FAIL = 10;
 
+        private static readonly float DIFF_CRIT_MODIFIER = 0.5f;
+        private static readonly float DIFF_CRIT_MAX = 25;
+        private static readonly float DIFF_FAIL_MODIFIER = 1f;
+        private static readonly float DIFF_FAIL_MAX = 50;
+
         private static readonly float DEFENDED_CRIT = -5;
-        public static Shot CreateShot(int playerShooting, Shot previousShot, Advantage advantage){
+        public static Shot CreateShot(int playerShooting, Shot previousShot, Advantage advantage, ShotType previousShotType){
             PlayerMatchInstance player = MatchEngine.Instance.GetPlayer(playerShooting);
             ShotType type = GenerateShotTypeProbabilities(previousShot.type,player).Calculate();
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
-            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(to,playerShooting, type, advantage);
+            ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(to,playerShooting, type, advantage, previousShotType);
             float shotTime = ShotTime.GetTimeForType(type);
             return new Shot(playerShooting, type, from, to, shotResultProbabilities, false, shotTime);
         }
@@ -61,55 +67,82 @@ namespace GameEngine
             return ShotResultProbabilities.GetShotTypeResultProbabilities(type);
         }
 
-        private static ShotResultProbabilities GenerateShotResultProbabilities(ShotCoord to, int playerShooting, ShotType type, Advantage advantage){
-            ShotResultProbabilities typeProbabilities = ShotResultProbabilities.GetShotTypeResultProbabilities(type);
+        private static ShotResultProbabilities GenerateShotResultProbabilities(ShotCoord to, int playerShooting, ShotType type, Advantage advantage, ShotType previousShotType){
+            ShotResultProbabilities probabilities = ShotResultProbabilities.GetShotTypeResultProbabilities(type);
             
-
-            ShotResultProbabilities resultingProbabilities = ShotResultAdvantageModification(typeProbabilities, playerShooting, advantage);
-            ShotResultProbabilities afterAttackProbabilities = ShotResultAttackModification(typeProbabilities, MatchEngine.Instance.GetPlayer(playerShooting), type);
-            ShotResultProbabilities afterDefenseProbabilities = ShotResultDefenseModification(resultingProbabilities,MatchEngine.Instance.GetOtherPlayer(playerShooting), type);
+            ShotResultAttributesModification(ref probabilities,MatchEngine.Instance.GetPlayer(playerShooting),MatchEngine.Instance.GetOtherPlayer(playerShooting), type, previousShotType);
+            ShotResultAdvantageModification(ref probabilities, playerShooting, advantage);
+            ShotResultOpposingPlayerModification(ref probabilities, MatchEngine.Instance.GetPlayer(playerShooting), type);
             
-            return afterDefenseProbabilities;
+            
+            
+            return probabilities;
         }
 
-        private static ShotResultProbabilities ShotResultAdvantageModification(ShotResultProbabilities probabilities, int playerShooting, Advantage advantage){
-            ShotResultProbabilities result = probabilities;
-            if(advantage.Player == playerShooting){
-                result.AddCrit(ADVANTAGE_CRIT*advantage.Amount);
+        private static void ShotResultAttributesModification(ref ShotResultProbabilities probabilities, PlayerMatchInstance playerShooting, PlayerMatchInstance playerDefending, ShotType shotType, ShotType previousShotType){
+            probabilities.AddCrit(GetCritFromAttribute(playerShooting, playerDefending, shotType, previousShotType));
+            //You calculate the difference between the atk of the atking player and the def of the defing player
+            
+        }
+
+        private static int GetCritFromAttribute(PlayerMatchInstance playerShooting, PlayerMatchInstance playerReceiving, ShotType shotType, ShotType previousShotType){
+            int atkDiff = GetFinalATKShotDifferential(playerShooting, playerReceiving, shotType, previousShotType);
+            if(atkDiff>=0){
+                return atkDiff/2;
             }else{
-                result.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
+                return atkDiff/4;
             }
-            return result;
         }
 
-        private static ShotResultProbabilities ShotResultAttackModification(ShotResultProbabilities probabilities, PlayerMatchInstance playerAttacking, ShotType type){
-            ShotResultProbabilities result = probabilities;
-            switch(type){
+        private static int GetFinalATKShotDifferential(PlayerMatchInstance playerShooting, PlayerMatchInstance playerReceiving, ShotType shotType, ShotType previousShotType){
+            return GetPureATKShotDifferential(playerShooting, playerReceiving, shotType) + (GetDEFShotDifferential(playerReceiving, playerShooting, previousShotType)/2);
+        }
+
+        private static int GetPureATKShotDifferential(PlayerMatchInstance playerShooting, PlayerMatchInstance playerReceiving, ShotType shotType){
+            switch(shotType){
                 case ShotType.LONG:
-                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_LONG));
-                break;
-                case ShotType.SMASH:
-                    Debug.Log("ATTACKING SMASH UPGRADE before: " + result.Crit);
-                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_SMASH));
-                    Debug.Log("ATTACKING SMASH UPGRADE before: " + result.Crit);
-                break;
+                    return playerShooting.GetUsableStats().longATK - playerReceiving.GetUsableStats().longDEF;
                 case ShotType.RUSH:
-                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_RUSH));
-                break;
+                    return playerShooting.GetUsableStats().rushATK - playerReceiving.GetUsableStats().rushDEF;
                 case ShotType.SHORT:
-                    result.AddCrit(playerAttacking.GetModifierList().GetModifier(ModifierName.ADDED_CRIT_ON_SHORT));
-                break;
+                    return playerShooting.GetUsableStats().shortATK - playerReceiving.GetUsableStats().shortDEF;
+                case ShotType.SMASH:
+                    return playerShooting.GetUsableStats().smashATK - playerReceiving.GetUsableStats().smashDEF;
             }
-            return result;
+            return 0;
         }
 
-        private static ShotResultProbabilities ShotResultDefenseModification(ShotResultProbabilities probabilities, PlayerMatchInstance playerDefending, ShotType type){
-            ShotResultProbabilities result = probabilities;
-            /*if(defensiveStrategy.IsDefended(to)){
-                result.AddCrit(DEFENDED_CRIT);
-            }*/
-            return result;
+        private static int GetDEFShotDifferential(PlayerMatchInstance playerShooting, PlayerMatchInstance playerReceiving, ShotType shotType){
+            switch(shotType){
+                case ShotType.LONG:
+                //if -0, return 0;
+                    return Math.Max(playerReceiving.GetUsableStats().longDEF - playerShooting.GetUsableStats().longATK, 0);
+                case ShotType.RUSH:
+                    return Math.Max(playerReceiving.GetUsableStats().rushDEF - playerShooting.GetUsableStats().rushATK, 0);
+                case ShotType.SHORT:
+                    return Math.Max(playerReceiving.GetUsableStats().shortDEF - playerShooting.GetUsableStats().shortATK, 0);
+                case ShotType.SMASH:
+                    return Math.Max(playerReceiving.GetUsableStats().smashDEF - playerShooting.GetUsableStats().smashATK, 0);
+            }
+            return 0;
         }
+
+        private static void ShotResultAdvantageModification(ref ShotResultProbabilities probabilities, int playerShooting, Advantage advantage){
+            if(advantage.Player == playerShooting){
+                probabilities.AddCrit(ADVANTAGE_CRIT*advantage.Amount);
+            }else{
+                probabilities.AddFail(DISADVANTAGE_FAIL*advantage.Amount);
+            }
+        }
+        private static void ShotResultOpposingPlayerModification(ref ShotResultProbabilities probabilities, PlayerMatchInstance playerAttacking, ShotType type){
+            // Now it's probably going to be where you put all the effects from the previous attack of the other player such as:
+            // "After my smashes, your next attack is worst" or something like that
+
+            //This is where you put the opposing player's defensive traits effect like
+            //"The smashes against me are less strong" or something like this.
+        }
+
+        
 
         //------------------------------------------------------------------------------------------------------------------
         //                                                  SHOT COORDS
@@ -138,8 +171,13 @@ namespace GameEngine
         //------------------------------------------------------------------------------------------------------------------
 
         public static ShotTypeProbabilities GenerateShotTypeProbabilities(ShotType previousType, PlayerMatchInstance player){
-            return ShotTypeProbabilities.GetShotTypeProbabilitiesFollowing(previousType);
+            ShotTypeProbabilities shotTypeProbabilities = ShotTypeProbabilities.GetShotTypeProbabilitiesFollowing(previousType);
+            ShotTypePlaystyleModification(ref shotTypeProbabilities, player);
+            return shotTypeProbabilities;
         }
         
+        public static void ShotTypePlaystyleModification(ref ShotTypeProbabilities shotTypeProbabilities, PlayerMatchInstance shootingPlayer){
+            shotTypeProbabilities = ShotTypeProbabilities.Merge(shotTypeProbabilities,shootingPlayer.GetCurrentPlaystyle().shotTypeProbabilities);
+        }
     }
 }

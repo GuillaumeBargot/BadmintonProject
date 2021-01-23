@@ -44,11 +44,24 @@ public static class ArrayExtensions
             return array1;
         }
         float[] result = new float[length];
-            for (int i = 0; i < length; i++)
-            {
-                result[i] = array1[i] * array2[i];
-            }
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = array1[i] * array2[i];
+        }
 
         return result;
+    }
+
+    public static float[] Merge(this float[] array1, float[] array2){
+        int legnth = array1.Length;
+        if(legnth!=array2.Length){
+            return array1;
+        }
+        float[] result = new float[legnth];
+        for(int i = 0; i < legnth; i++){
+            result[i] = (array1[i] + array2[i]) / 2;
+        }
+        return result;
+        
     }
 }

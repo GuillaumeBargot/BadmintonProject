@@ -50,5 +50,10 @@ namespace GameEngine
             }
             return new ShotTypeProbabilities();
         }
+
+        public static ShotTypeProbabilities Merge(ShotTypeProbabilities prob1, ShotTypeProbabilities prob2)
+        {
+            return new ShotTypeProbabilities(MergeProbabilities(prob1.probabilities, prob2.probabilities));
+        }
     }
 }

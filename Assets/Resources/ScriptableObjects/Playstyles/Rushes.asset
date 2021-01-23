@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d4905fe75eb425ba18c519ea9e28bb, type: 3}
-  m_Name: PLAYSTYLE_AGGRESSIVE_SMASHING
+  m_Script: {fileID: 11500000, guid: de9ffb952bcfd48b499eb90a4e11fcdc, type: 3}
+  m_Name: Rushes
   m_EditorClassIdentifier: 
-  id: PLAYSTYLE_AGRESSIVE_SMASHING
-  probabilities:
-  - 25
-  - 20
-  - 5
-  - 50
+  id: 
+  modifiers:
+    list: []
+  shotTypeProbabilities: {fileID: 0}

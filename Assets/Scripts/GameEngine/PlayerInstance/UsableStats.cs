@@ -7,14 +7,14 @@ namespace GameEngine
     public class UsableStats
     {
         //Different stats used to measure efficiency of each shot/defense during the game
-        private int longATK;
-        private int longDEF;
-        private int rushATK;
-        private int rushDEF;
-        private int smashATK;
-        private int smashDEF;
-        private int shortATK;
-        private int shortDEF;
+        public int longATK;
+        public int longDEF;
+        public int rushATK;
+        public int rushDEF;
+        public int smashATK;
+        public int smashDEF;
+        public int shortATK;
+        public int shortDEF;
 
         public UsableStats(PlayerStats playerStats,ModifierList modifierList){
             CalculateLongATK(playerStats,modifierList);
