@@ -8,6 +8,12 @@ public class ModifierList {
     [SerializeField]
     private Modifier[] list;
 
+    public Modifier[] List{
+        get{
+            return list;
+        }
+    }
+
     public ModifierList(){
         list = new Modifier[0];
     }
@@ -40,6 +46,11 @@ public class ModifierList {
         foreach(Modifier modifier in otherList.list){
             AddValueToModifier(modifier.modifierName,modifier.modifierValue);
         }
+    }
+
+    public int Size(){
+        if(list==null) return 0;
+        return list.Length;
     }
 
     public void Log(){

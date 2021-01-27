@@ -12,11 +12,21 @@ public class ScoreDisplay : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI[] setsTexts;
 
+    [SerializeField]
+    private MatchUIEventReader uIEventReader;
+
     private (bool, bool) pointAnimations = (false, false);
     private (bool, bool) setAnimations = (false, false);
 
     private ScoreRecap storedScoreRecap = null;
 
+    private void Start() {
+        uIEventReader.scoreChanged+=SetScoreRecap;
+    }
+
+    private void OnDestroy() {
+        uIEventReader.scoreChanged-=SetScoreRecap;
+    }
     public void SetPointTexts((int, int) points)
     {
         pointsTexts[0].text = points.Item1.ToString();

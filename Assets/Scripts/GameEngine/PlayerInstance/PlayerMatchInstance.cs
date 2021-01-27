@@ -71,6 +71,10 @@ public class PlayerMatchInstance
         return currentPlaystyle;
     }
 
+    public void SetCurrentPlaystyle(int equippedIndex){
+        currentPlaystyle = equippedPlaystyles.GetPlaystyle(equippedIndex);
+    }
+
     public void SetPlaystyle(Playstyle playstyle){
         this.currentPlaystyle = playstyle;
     }
@@ -83,6 +87,9 @@ public class PlayerMatchInstance
         return usableStats;
     }
 
+    public EquippedPlaystyles GetEquippedPlaystyles(){
+        return equippedPlaystyles;
+    }
     
 
 }

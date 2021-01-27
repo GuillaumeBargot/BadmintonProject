@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9ffb952bcfd48b499eb90a4e11fcdc, type: 3}
   m_Name: Neutral
   m_EditorClassIdentifier: 
-  id: 
+  id: NEUTRAL
   modifiers:
     list: []
-  shotTypeProbabilities: {fileID: 0}
+  shotTypeProbabilities: {fileID: 11400000, guid: 2a10aba7311bd4900a006492b0dddffe,
+    type: 2}

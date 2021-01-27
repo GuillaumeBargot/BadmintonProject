@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9ffb952bcfd48b499eb90a4e11fcdc, type: 3}
   m_Name: LongShots
   m_EditorClassIdentifier: 
-  id: 
+  id: LONG_SHOTS
   modifiers:
-    list: []
-  shotTypeProbabilities: {fileID: 0}
+    list:
+    - modifierName: 1
+      modifierValue: 5
+  shotTypeProbabilities: {fileID: 11400000, guid: 4e9d302b771254ea583e4c38eeca0707,
+    type: 2}

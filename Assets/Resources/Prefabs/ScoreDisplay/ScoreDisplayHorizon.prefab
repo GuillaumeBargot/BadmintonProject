@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 4363245667125307264}
   - component: {fileID: 4363245667125307270}
   m_Layer: 5
-  m_Name: ScoreDisplayHor 1
+  m_Name: ScoreDisplayHorizon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,6 +264,7 @@ MonoBehaviour:
   setsTexts:
   - {fileID: 4363245667539335721}
   - {fileID: 4363245668438432473}
+  uIEventReader: {fileID: 11400000, guid: 3d3f9967760bf4a3195e4c3c4d5c234b, type: 2}
 --- !u!1 &4363245667539335723
 GameObject:
   m_ObjectHideFlags: 0

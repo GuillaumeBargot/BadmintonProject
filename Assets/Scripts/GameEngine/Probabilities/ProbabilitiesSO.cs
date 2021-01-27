@@ -6,13 +6,14 @@ namespace GameEngine
 {
     //This is the parent class for all probabilities (before called Tendencies or Chances). 
     //It rules everything that has a random number drawn into in the game
-    public abstract class Probabilities<T>
+    public abstract class ProbabilitiesSO<T> : ScriptableObjectWithID
     {
+        [SerializeField]
         protected float[] probabilities;
 
         protected T[] associatedResults;
 
-        public Probabilities(float[] probabilities)
+        public ProbabilitiesSO(float[] probabilities)
         {
             this.probabilities = probabilities;
             SetAssociatedResults();

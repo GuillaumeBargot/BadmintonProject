@@ -7,7 +7,7 @@ using NAME = GameEngine.ShotTypeProbabilitiesHelper.NAME;
 namespace GameEngine
 {
     [CreateAssetMenu(fileName = "ShotTypeProbabilities", menuName = "GameEngine/ShotTypeProbabilities", order = 1)]
-    public class ShotTypeProbabilities : Probabilities<ShotType>
+    public class ShotTypeProbabilities : ProbabilitiesSO<ShotType>
     {
         //CONSTANTS
         private static float[] BASE_PROBABILITIES => new float[] { 40, 20, 10, 30 };

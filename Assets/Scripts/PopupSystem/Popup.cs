@@ -11,7 +11,7 @@ public class Popup : MonoBehaviour
     private PopupSystem parentPopupSystem;
 
 
-    private void Start() {
+    protected virtual void Start() {
         closeButton.onClick.AddListener(() => {ClosePopup();});
     }
 

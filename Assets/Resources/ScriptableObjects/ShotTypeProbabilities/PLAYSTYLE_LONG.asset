@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d4905fe75eb425ba18c519ea9e28bb, type: 3}
   m_Name: PLAYSTYLE_LONG
   m_EditorClassIdentifier: 
-  id: 
+  id: PLAYSTYLE_LONG
   probabilities:
-  - 40
-  - 20
+  - 60
+  - 15
   - 10
-  - 30
+  - 15

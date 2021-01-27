@@ -59,19 +59,14 @@ namespace GameEngine
             {
                 case ShotResult.CRIT:
                     Debug.Log(currentPMI.Name() + " crits  a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
-                    //score.ScoreFor(currentPoint.currentPlayerShooting);
                     currentPoint.advantage.AddAdvantage(currentPoint.currentPlayerShooting);
-                    UpdateAdvantageUI(currentPoint.advantage);
-                    //FieldCritResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
+                    uiEventReader.OnAdvantageUpdated(currentPoint.advantage);
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to, currentPoint.currentShot.type, currentPoint.currentShot.shotTime);
-                    CritMessage(currentPoint.currentPlayerShooting);
-                    //RefreshScoreRecap();
-                    //currentPoint.pointOver = true;
+                    uiEventReader.OnCritEvent(currentPoint.currentPlayerShooting);
                     break;
                 case ShotResult.FAIL:
                     Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     score.ScoreAgainst(currentPoint.currentPlayerShooting);
-                    //FieldFailResult(currentPoint.currentPlayerShooting, currentPoint.currentShot.shotCoord.Get());
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to,currentPoint.currentShot.type, currentPoint.currentShot.shotTime);
                     RefreshScoreRecap();
                     currentPoint.pointOver = true;
@@ -93,7 +88,7 @@ namespace GameEngine
         {
             //Do something after the end of the point. Like store the point in the point history
             pointHistory.AddHistoryPoint(currentPoint.GetHistoryPoint());
-            ResetAdvantageUI();
+            uiEventReader.OnAdvantageReset();
         }
     }
 

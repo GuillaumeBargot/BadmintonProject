@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d4905fe75eb425ba18c519ea9e28bb, type: 3}
-  m_Name: PLAYSTYLE_RUSH
+  m_Script: {fileID: 11500000, guid: 931cf72a438484ce68dbbb22d0a52144, type: 3}
+  m_Name: UIEventReader
   m_EditorClassIdentifier: 
-  id: PLAYSTYLE_RUSH
-  probabilities:
-  - 30
-  - 40
-  - 10
-  - 20

@@ -64,12 +64,6 @@ namespace GameEngine
             return (playerID == 0) ? cpu : player;
         }
 
-        private void RefreshScoreRecap()
-        {
-            score.LogScore();
-            scoreDisplay.SetScoreRecap(score.GetScoreRecap());
-        }
-
         private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type, float shotTime){
             field.DoAShot(from.Index, to.Index, playerShooting, type, shotTime);
         }

@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: 4363245667125307266, guid: c149edefda9934bf49c544c6609bb6bf,
         type: 3}
       propertyPath: m_Name
-      value: ScoreDisplayHor
+      value: ScoreDisplayVerti
       objectReference: {fileID: 0}
     - target: {fileID: 4363245667125307267, guid: c149edefda9934bf49c544c6609bb6bf,
         type: 3}
@@ -127,6 +127,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4363245667125307270, guid: c149edefda9934bf49c544c6609bb6bf,
+        type: 3}
+      propertyPath: uIEventReader
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d3f9967760bf4a3195e4c3c4d5c234b,
+        type: 2}
     - target: {fileID: 4363245667539335720, guid: c149edefda9934bf49c544c6609bb6bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y

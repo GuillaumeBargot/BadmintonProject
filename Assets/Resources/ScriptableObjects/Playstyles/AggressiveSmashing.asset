@@ -16,6 +16,6 @@ MonoBehaviour:
   modifiers:
     list:
     - modifierName: 0
-      modifierValue: 10
+      modifierValue: 5
   shotTypeProbabilities: {fileID: 11400000, guid: 4c6bc286302194c93a57ccfab12df86c,
     type: 2}
