@@ -869,18 +869,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901012042}
   m_CullTransparentMesh: 0
---- !u!114 &981449822 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2132589754273454728, guid: a43687c9638e7492da2b6c2de4e5cb1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1298990939}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c340d226b33b44b8ba051ada67fdc94e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1114766461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7862408142586464059, guid: 11315a514f4de4d80be9601ed7015653,
@@ -1139,8 +1127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 1121228944}
-  scoreDisplay: {fileID: 981449822}
-  playButton: {fileID: 1638199484}
   advantageBar: {fileID: 480403302}
   messageSystem: {fileID: 1414511081}
   playstylePopupPrefab: {fileID: 7365425918731022426, guid: fa37359fd40c64e2aa7ad6e9a09aa171,
@@ -1479,7 +1465,7 @@ MonoBehaviour:
   playBtnIcon: {fileID: 21300000, guid: e947cede0163f4f4a99e0f0b6ff5757d, type: 3}
   pauseBtnIcon: {fileID: 21300000, guid: 8eda726f8c37a4fda98b810ad5a29d02, type: 3}
   icon: {fileID: 1921787703}
-  matchEngine: {fileID: 1414511076}
+  eventReader: {fileID: 11400000, guid: 3d3f9967760bf4a3195e4c3c4d5c234b, type: 2}
 --- !u!1 &1921787701
 GameObject:
   m_ObjectHideFlags: 0

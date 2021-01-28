@@ -21,11 +21,11 @@ public class ScoreDisplay : MonoBehaviour
     private ScoreRecap storedScoreRecap = null;
 
     private void Start() {
-        uIEventReader.scoreChanged+=SetScoreRecap;
+        uIEventReader.scoreChangedEvent+=SetScoreRecap;
     }
 
     private void OnDestroy() {
-        uIEventReader.scoreChanged-=SetScoreRecap;
+        uIEventReader.scoreChangedEvent-=SetScoreRecap;
     }
     public void SetPointTexts((int, int) points)
     {

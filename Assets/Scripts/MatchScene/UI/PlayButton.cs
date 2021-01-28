@@ -16,12 +16,27 @@ public class PlayButton : MonoBehaviour
     Image icon;
 
     [SerializeField]
-    MatchEngine matchEngine;
+    MatchUIEventReader eventReader;
 
-    public void OnClick(){
-        matchEngine.PlayOrPause();
+    private void Start() {
+        eventReader.pausedEvent+=OnPaused;
     }
 
+    private void OnDestroy() {
+        eventReader.pausedEvent-=OnPaused;
+    }
+
+    public void OnClick(){
+        MatchEngine.Instance.PlayOrPause();
+    }
+
+    private void OnPaused(bool paused){
+        if(paused){
+            OnStatePaused();
+        }else{
+            OnStatePlaying();
+        }
+    }
     public void OnStatePlaying(){
         icon.sprite = pauseBtnIcon;
     }

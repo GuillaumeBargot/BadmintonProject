@@ -11,8 +11,8 @@ public class MatchUIEventReader : ScriptableObject
     public event UnityAction<Advantage> advantageUpdatedEvent;
     public event UnityAction advantageResetEvent;
     public event UnityAction<int> critEvent;
-
-    public event UnityAction<ScoreRecap> scoreChanged;
+    public event UnityAction<ScoreRecap> scoreChangedEvent;
+    public event UnityAction<bool> pausedEvent;
 
     public void OnPlaystyleChanged(int player){
         playstyleChangedEvent.Invoke(player);
@@ -31,6 +31,10 @@ public class MatchUIEventReader : ScriptableObject
     }
 
     public void OnScoreChanged(ScoreRecap scoreRecap){
-        scoreChanged.Invoke(scoreRecap);
+        scoreChangedEvent.Invoke(scoreRecap);
+    }
+
+    public void OnPaused(bool paused){
+        pausedEvent.Invoke(paused);
     }
 }

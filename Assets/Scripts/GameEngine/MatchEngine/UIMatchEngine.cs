@@ -9,9 +9,6 @@ namespace GameEngine
     {
 
         [SerializeField]
-        PlayButton playButton;
-
-        [SerializeField]
         AdvantageBar advantageBar;
 
         [SerializeField]
@@ -30,24 +27,26 @@ namespace GameEngine
         MatchUIEventReader uiEventReader;
 
 
-        private void Start() {
-            uiEventReader.playstyleChangedEvent+=OnPlaystyleChanged;
-            uiEventReader.advantageUpdatedEvent+=UpdateAdvantageUI;
-            uiEventReader.advantageResetEvent+=ResetAdvantageUI;
-            uiEventReader.critEvent+=CritMessage;
+        private void Start()
+        {
+            uiEventReader.playstyleChangedEvent += OnPlaystyleChanged;
+            uiEventReader.advantageUpdatedEvent += UpdateAdvantageUI;
+            uiEventReader.advantageResetEvent += ResetAdvantageUI;
+            uiEventReader.critEvent += CritMessage;
 
             //Kick the event for good mesure:
             uiEventReader.OnPlaystyleChanged(0);
             uiEventReader.OnPlaystyleChanged(1);
         }
 
-        private void OnDestroy() {
-            uiEventReader.playstyleChangedEvent-=OnPlaystyleChanged;
-            uiEventReader.advantageUpdatedEvent-=UpdateAdvantageUI;
-            uiEventReader.advantageResetEvent-=ResetAdvantageUI;
-            uiEventReader.critEvent-=CritMessage;
+        private void OnDestroy()
+        {
+            uiEventReader.playstyleChangedEvent -= OnPlaystyleChanged;
+            uiEventReader.advantageUpdatedEvent -= UpdateAdvantageUI;
+            uiEventReader.advantageResetEvent -= ResetAdvantageUI;
+            uiEventReader.critEvent -= CritMessage;
         }
-        
+
         public void PlayOrPause()
         {
             if (isPaused)
@@ -60,27 +59,33 @@ namespace GameEngine
             }
         }
 
-        private void Pause()
+        public void Pause()
         {
-            isPaused = true;
-            playButton.OnStatePaused();
+            if (!isPaused)
+            {
+                isPaused = true;
+                uiEventReader.OnPaused(true);
+            }
         }
 
         private void Play()
         {
             isPaused = false;
-            playButton.OnStatePlaying();
+            uiEventReader.OnPaused(false);
         }
 
-        private void UpdateAdvantageUI(Advantage advantage){
+        private void UpdateAdvantageUI(Advantage advantage)
+        {
             advantageBar.UpdateAdvantage(advantage);
         }
 
-        private void ResetAdvantageUI(){
+        private void ResetAdvantageUI()
+        {
             advantageBar.Reset();
         }
 
-        private void CritMessage(int playerShooting){
+        private void CritMessage(int playerShooting)
+        {
             messageSystem.CritMessage(playerShooting);
         }
 
@@ -91,24 +96,31 @@ namespace GameEngine
             //scoreDisplay.SetScoreRecap(score.GetScoreRecap());
         }
 
-        public void OnPlaystyleClick(){
+        public void OnPlaystyleClick()
+        {
             PopupSystem.Instance.InstantiatePopup<PlaystylePopup>(playstylePopupPrefab);
         }
 
-        private void OnPlaystyleChanged(int player){
+        private void OnPlaystyleChanged(int player)
+        {
             Playstyle playstyle = GetPlayer(player).GetCurrentPlaystyle();
-            if(player==0){
+            if (player == 0)
+            {
                 ChangeP1PlaystyleText(playstyle);
-            }else{
+            }
+            else
+            {
                 ChangeCPUPlaystyleText(playstyle);
             }
         }
 
-        private void ChangeP1PlaystyleText(Playstyle playstyle){
+        private void ChangeP1PlaystyleText(Playstyle playstyle)
+        {
             p1PlaystyleText.SetText(playstyle.id);
         }
 
-        private void ChangeCPUPlaystyleText(Playstyle playstyle){
+        private void ChangeCPUPlaystyleText(Playstyle playstyle)
+        {
             cpuPlaystyleText.SetText(playstyle.id);
         }
     }

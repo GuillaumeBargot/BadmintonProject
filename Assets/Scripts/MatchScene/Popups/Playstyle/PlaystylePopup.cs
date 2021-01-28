@@ -29,6 +29,7 @@ public class PlaystylePopup : Popup
 
     private void Start() {
         base.Start();
+        MatchEngine.Instance.Pause();
         SetPlaystyleButtons();
         RefreshEffectsZone();
     }
