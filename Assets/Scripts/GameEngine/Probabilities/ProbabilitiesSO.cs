@@ -52,10 +52,9 @@ namespace GameEngine
             return percentages.Length - 1;
         }
 
-        protected static float[] MergeProbabilities(float[] tendencies1, float[] tendencies2)
+        protected void MergeProbabilitiesWith(float[] otherProbabilities)
         {   
-            float[] resultingTendencies = tendencies1.Merge(tendencies2);
-            return resultingTendencies;
+            probabilities = probabilities.Merge(otherProbabilities);
             /*float[] resultingTendencies = tendencies1.Multiply(tendencies2);
             float resultSum = resultingTendencies.Sum();
             float multiplicator = 100f / resultSum;

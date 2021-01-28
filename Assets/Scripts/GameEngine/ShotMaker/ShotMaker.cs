@@ -177,7 +177,7 @@ namespace GameEngine
         }
         
         public static void ShotTypePlaystyleModification(ref ShotTypeProbabilities shotTypeProbabilities, PlayerMatchInstance shootingPlayer){
-            shotTypeProbabilities = ShotTypeProbabilities.Merge(shotTypeProbabilities,shootingPlayer.GetCurrentPlaystyle().shotTypeProbabilities);
+            shotTypeProbabilities.MergeWith(shootingPlayer.GetCurrentPlaystyle().shotTypeProbabilities);
         }
     }
 }
