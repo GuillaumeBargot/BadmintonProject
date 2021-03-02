@@ -16,7 +16,7 @@ public class PlayButton : MonoBehaviour
     Image icon;
 
     [SerializeField]
-    MatchUIEventReader eventReader;
+    MatchEventReader eventReader;
 
     private void Start() {
         eventReader.pausedEvent+=OnPaused;

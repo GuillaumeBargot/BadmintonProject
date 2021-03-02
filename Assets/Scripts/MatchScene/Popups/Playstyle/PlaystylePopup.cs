@@ -17,7 +17,7 @@ public class PlaystylePopup : Popup
 
     //-------------------------- UI EVENT READER -----------------------------
     [SerializeField]
-    private MatchUIEventReader uIEventReader;
+    private MatchEventReader uIEventReader;
 
     //------------------------- private ----------------------------------
 

@@ -22,7 +22,7 @@ namespace GameEngine
             ShotCoord from = previousShot.to;
             ShotCoord to = CalculateShotCoord(GenerateShotCoordProbabilities(type,player));
             ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(to,playerShooting, type, advantage, previousShotType);
-            float shotTime = ShotTime.GetTimeForType(type);
+            float shotTime = ShotTime.GetTimeForType(type, MatchEngine.Instance.MatchPreferences);
             return new Shot(playerShooting, type, from, to, shotResultProbabilities, false, shotTime);
         }
 
@@ -33,7 +33,7 @@ namespace GameEngine
             ShotCoord to = GetToForServing(points);
             ShotType type = ShotType.LONG;
             ShotResultProbabilities shotResultProbabilities = GenerateShotResultProbabilities(playerShooting, type);
-            float shotTime = ShotTime.GetTimeForType(type);
+            float shotTime = ShotTime.GetTimeForType(type,MatchEngine.Instance.MatchPreferences);
             return new Serve(playerShooting, type, from, to, shotResultProbabilities, shotTime);
         }
 

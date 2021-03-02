@@ -13,7 +13,7 @@ public class ScoreDisplay : MonoBehaviour
     private TextMeshProUGUI[] setsTexts;
 
     [SerializeField]
-    private MatchUIEventReader uIEventReader;
+    private MatchEventReader uIEventReader;
 
     private (bool, bool) pointAnimations = (false, false);
     private (bool, bool) setAnimations = (false, false);

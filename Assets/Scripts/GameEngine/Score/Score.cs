@@ -20,27 +20,30 @@ namespace GameEngine
 
         private bool matchOver = false;
 
+        private MatchEventReader eventReader;
+
         //------------------------------ CREATION ---------------------------------
-        public static Score CreateBO3Match()
+        public static Score CreateBO3Match(MatchEventReader eventReader)
         {
-            return CreateBestOfMatch(3);
+            return CreateBestOfMatch(3, eventReader);
         }
 
-        public static Score CreateBO5Match()
+        public static Score CreateBO5Match(MatchEventReader eventReader)
         {
-            return CreateBestOfMatch(5);
+            return CreateBestOfMatch(5, eventReader);
         }
 
-        private static Score CreateBestOfMatch(int nbSets)
+        private static Score CreateBestOfMatch(int nbSets, MatchEventReader eventReader)
         {
             (int, int)[] setsScores = new (int, int)[nbSets].Populate((0, 0));
             (int, int) matchScore = (0, 0);
             int currentSet = 0;
-            return new Score(setsScores, matchScore, currentSet);
+            return new Score(setsScores, matchScore, currentSet, eventReader);
         }
 
-        private Score((int, int)[] setsScores, (int, int) matchScore, int currentSet)
+        private Score((int, int)[] setsScores, (int, int) matchScore, int currentSet, MatchEventReader eventReader)
         {
+            this.eventReader = eventReader;
             this.setsScores = setsScores;
             this.matchScore = matchScore;
             this.currentSet = currentSet;
@@ -88,9 +91,12 @@ namespace GameEngine
 
         public void Checks()
         {
+            
             if (CheckIfEndOfSet())
             {
                 ProceedChangeOfSet();
+                Debug.Log("-------END OF SET--------");
+                eventReader.OnNewSet();
             }
         }
         public bool CheckIfEndOfSet()
@@ -121,6 +127,7 @@ namespace GameEngine
 
         public void ProceedChangeOfSet()
         {
+            Debug.Log("Proceeding change of Set");
             if (setsScores[currentSet].Item1 > setsScores[currentSet].Item2)
             {
                 matchScore.Item1++;

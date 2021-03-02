@@ -24,27 +24,28 @@ namespace GameEngine
         TextMeshProUGUI cpuPlaystyleText;
 
         [SerializeField]
-        MatchUIEventReader uiEventReader;
+        MatchEventReader eventReader;
 
 
         private void Start()
         {
-            uiEventReader.playstyleChangedEvent += OnPlaystyleChanged;
-            uiEventReader.advantageUpdatedEvent += UpdateAdvantageUI;
-            uiEventReader.advantageResetEvent += ResetAdvantageUI;
-            uiEventReader.critEvent += CritMessage;
+            eventReader.playstyleChangedEvent += OnPlaystyleChanged;
+            eventReader.advantageUpdatedEvent += UpdateAdvantageUI;
+            eventReader.advantageResetEvent += ResetAdvantageUI;
+            eventReader.critEvent += CritMessage;
 
             //Kick the event for good mesure:
-            uiEventReader.OnPlaystyleChanged(0);
-            uiEventReader.OnPlaystyleChanged(1);
+            eventReader.OnPlaystyleChanged(0);
+            eventReader.OnPlaystyleChanged(1);
         }
 
         private void OnDestroy()
         {
-            uiEventReader.playstyleChangedEvent -= OnPlaystyleChanged;
-            uiEventReader.advantageUpdatedEvent -= UpdateAdvantageUI;
-            uiEventReader.advantageResetEvent -= ResetAdvantageUI;
-            uiEventReader.critEvent -= CritMessage;
+            eventReader.playstyleChangedEvent -= OnPlaystyleChanged;
+            eventReader.advantageUpdatedEvent -= UpdateAdvantageUI;
+            eventReader.advantageResetEvent -= ResetAdvantageUI;
+            eventReader.critEvent -= CritMessage;
+            aIBehavior.OnDestroy();
         }
 
         public void PlayOrPause()
@@ -64,14 +65,14 @@ namespace GameEngine
             if (!isPaused)
             {
                 isPaused = true;
-                uiEventReader.OnPaused(true);
+                eventReader.OnPaused(true);
             }
         }
 
         private void Play()
         {
             isPaused = false;
-            uiEventReader.OnPaused(false);
+            eventReader.OnPaused(false);
         }
 
         private void UpdateAdvantageUI(Advantage advantage)
@@ -92,7 +93,7 @@ namespace GameEngine
         private void RefreshScoreRecap()
         {
             score.LogScore();
-            uiEventReader.OnScoreChanged(score.GetScoreRecap());
+            eventReader.OnScoreChanged(score.GetScoreRecap());
             //scoreDisplay.SetScoreRecap(score.GetScoreRecap());
         }
 

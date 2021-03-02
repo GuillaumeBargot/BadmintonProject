@@ -10,7 +10,7 @@ namespace GameEngine
         public void StartGame()
         {
             Debug.Log("Match between " + player.Name() + " and " + cpu.Name() + " starting");
-            score = Score.CreateBO3Match();
+            score = Score.CreateBO3Match(eventReader);
             StartCoroutine(PlayMatch());
         }
 
@@ -20,7 +20,7 @@ namespace GameEngine
             {
                 yield return StartCoroutine(PointCoroutine());
                 ProcessFinishedPoint();
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.1f); //SAME, PLS PUT IT 10x LONGER FOR NORMAL TIMING
             }
             yield return null;
         }
@@ -60,9 +60,9 @@ namespace GameEngine
                 case ShotResult.CRIT:
                     Debug.Log(currentPMI.Name() + " crits  a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
                     currentPoint.advantage.AddAdvantage(currentPoint.currentPlayerShooting);
-                    uiEventReader.OnAdvantageUpdated(currentPoint.advantage);
+                    eventReader.OnAdvantageUpdated(currentPoint.advantage);
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to, currentPoint.currentShot.type, currentPoint.currentShot.shotTime);
-                    uiEventReader.OnCritEvent(currentPoint.currentPlayerShooting);
+                    eventReader.OnCritEvent(currentPoint.currentPlayerShooting);
                     break;
                 case ShotResult.FAIL:
                     Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
@@ -88,7 +88,7 @@ namespace GameEngine
         {
             //Do something after the end of the point. Like store the point in the point history
             pointHistory.AddHistoryPoint(currentPoint.GetHistoryPoint());
-            uiEventReader.OnAdvantageReset();
+            eventReader.OnAdvantageReset();
         }
     }
 

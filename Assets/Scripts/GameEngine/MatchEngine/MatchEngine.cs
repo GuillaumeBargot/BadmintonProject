@@ -26,6 +26,17 @@ namespace GameEngine
 
         public PointHistory pointHistory;
 
+        private AIBehavior aIBehavior;
+
+        [SerializeField]
+        private MatchPreferences matchPreferences;
+
+        public MatchPreferences MatchPreferences{
+            get{
+                return matchPreferences;
+            }
+        }
+
         void Awake()
         {
             // if the singleton hasn't been initialized yet
@@ -39,8 +50,9 @@ namespace GameEngine
             player = new PlayerMatchInstance("JeanPlayer");
             cpu = new PlayerMatchInstance("EdouardCPU");
             pointHistory = new PointHistory();
+            aIBehavior = new EasyAIBehavior(eventReader);
             StartGame();
-            
+
 
         }
 
@@ -60,17 +72,24 @@ namespace GameEngine
             return (playerID == 0) ? player : cpu;
         }
 
-        public PlayerMatchInstance GetOtherPlayer(int playerID){
+        public PlayerMatchInstance GetOtherPlayer(int playerID)
+        {
             return (playerID == 0) ? cpu : player;
         }
 
-        private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type, float shotTime){
+        public PlayerMatchInstance GetCPU()
+        {
+            return cpu;
+        }
+
+        private void FieldShot(int playerShooting, ShotCoord from, ShotCoord to, ShotType type, float shotTime)
+        {
             field.DoAShot(from.Index, to.Index, playerShooting, type, shotTime);
         }
 
-        private void PositionTwoPlayersBeforeServe(int playerServing, (ShotCoord,ShotCoord) positions){
+        private void PositionTwoPlayersBeforeServe(int playerServing, (ShotCoord, ShotCoord) positions)
+        {
             field.PositionPlayers(playerServing, positions);
         }
-
     }
 }
