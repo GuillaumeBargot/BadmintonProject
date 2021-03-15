@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Threading.Tasks;
 
 [CreateAssetMenu(fileName = "SaveManager", menuName = "Save/SaveManager", order = 1)]
 public class SaveManager : ScriptableObject
@@ -14,7 +15,11 @@ public class SaveManager : ScriptableObject
     }
 
     public void Save(){
-        SerializationManager.Save(SaveData.current.saveSlot, SaveData.current.CreateSnapshot(), SaveData.current);
+        //Test Async:
+        string persistentPath = Application.persistentDataPath;
+        Task t = Task.Run(() => SerializationManager.SaveAsync(SaveData.current.saveSlot, SaveData.current.CreateSnapshot(), SaveData.current, persistentPath));
+        t.Wait();
+        //SerializationManager.Save(SaveData.current.saveSlot, SaveData.current.CreateSnapshot(), SaveData.current);
     }
 
     public void Load(int nbSave){
