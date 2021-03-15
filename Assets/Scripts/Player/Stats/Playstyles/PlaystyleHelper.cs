@@ -16,4 +16,8 @@ public static class PlaystyleHelper
     public static Playstyle GetPlaystyle(NAME name){
         return ScriptableObjectHelper.GetPlaystyleWithId(name.ToString());
     }
+
+    public static Playstyle GetPlaystyle(string id){
+        return ScriptableObjectHelper.GetPlaystyleWithId(id);
+    }
 }

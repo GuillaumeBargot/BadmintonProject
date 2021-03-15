@@ -27,7 +27,7 @@ public class MainMenuScene : MonoBehaviour
                 GoToScene("NewGameScene");
                 break;
             case 2:
-                GoToScene("LoadGameScene");
+                GoToScene("LoadScene");
                 break;
             case 3:
                 GoToScene("MatchScene");

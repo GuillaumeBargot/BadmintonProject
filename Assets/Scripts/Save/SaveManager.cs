@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveManager : MonoBehaviour
+[CreateAssetMenu(fileName = "SaveManager", menuName = "Save/SaveManager", order = 1)]
+public class SaveManager : ScriptableObject
 {
     private string SAVES_FOLDER;
     private string[] snapshotFiles;
@@ -12,8 +13,16 @@ public class SaveManager : MonoBehaviour
         SAVES_FOLDER = Application.persistentDataPath + "/saves/";
     }
 
-    public void OnSave(int saveNumber){
-        SerializationManager.Save(saveNumber, SaveData.current.CreateSnapshot(), SaveData.current);
+    public void Save(){
+        SerializationManager.Save(SaveData.current.saveSlot, SaveData.current.CreateSnapshot(), SaveData.current);
+    }
+
+    public void Load(int nbSave){
+        SaveData.Load((SaveData)SerializationManager.LoadSave(nbSave));
+    }
+
+    public void Delete(int nbSave){
+        SerializationManager.DeleteSave(nbSave);
     }
 
     public void GetSnapshots(){

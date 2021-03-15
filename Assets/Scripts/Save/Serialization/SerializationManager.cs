@@ -46,6 +46,22 @@ public class SerializationManager
         return LoadObject(saveNumber, Application.persistentDataPath + "/saves", ".save");
     }
 
+    public static void DeleteSave(int saveNumber){
+        DeleteObject(saveNumber, Application.persistentDataPath + "/saves", ".snap");
+        DeleteObject(saveNumber, Application.persistentDataPath + "/saves", ".savews");
+    }
+
+    private static void DeleteObject(int saveNumber, string path, string extension){
+        string finalPath = path + "/" + saveNumber + extension;
+        if (!File.Exists(finalPath))
+        {
+            //nothing
+        }else{
+            File.Delete(finalPath);
+        }
+
+    }
+
     private static object LoadObject(int saveNumber, string path, string extension)
     {
         string finalPath = path + "/" + saveNumber + extension;

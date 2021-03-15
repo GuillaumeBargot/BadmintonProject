@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GameEngine
 {
+    [System.Serializable]
     public class ShotCoord
     {
         private readonly string[] tileNames = {"Short Left", "Short Center", "Short Right",

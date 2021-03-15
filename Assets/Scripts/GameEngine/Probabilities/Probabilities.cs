@@ -6,6 +6,7 @@ namespace GameEngine
 {
     //This is the parent class for all probabilities (before called Tendencies or Chances). 
     //It rules everything that has a random number drawn into in the game
+    [System.Serializable]
     public abstract class Probabilities<T>
     {
         protected float[] probabilities;

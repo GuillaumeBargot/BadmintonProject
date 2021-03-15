@@ -23,7 +23,8 @@ public class CoachNamePopup : Popup
         }else{
             SaveData.current.profile = new HumanPlayerProfile();
             SaveData.current.profile.playerName = inputField.text;
-            saveManager.OnSave(selectedSlot);
+            SaveData.current.saveSlot = selectedSlot;
+            saveManager.Save();
             StartCoroutine(GoToHomeScene());
         }
     }

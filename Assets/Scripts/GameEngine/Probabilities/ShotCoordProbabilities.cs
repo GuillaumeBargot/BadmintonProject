@@ -62,5 +62,9 @@ namespace GameEngine
             Debug.Log("  " + probabilities[6] + " / " + probabilities[7] + " / " + probabilities[8]);
         }
 
+        public float[] GetRawProbabilities(){
+            return probabilities;
+        }
+
     }
 }

@@ -58,11 +58,7 @@ public class PlayerMatchInstance
     public int Endurance(){
         return player.stats.endurance;
     }
-
-    public ShotTypeProbabilities ShotTypeProbabilities(){
-        return player.shotTypeProbabilities;
-    }
-
+    
     public ShotCoordProbabilities ShotCoordTendencies(){
         return player.shotCoordProbabilities;
     }

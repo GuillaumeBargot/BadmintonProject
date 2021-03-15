@@ -22,8 +22,14 @@ public class SaveData
     public int saveSlot;
     public HumanPlayerProfile profile;
 
+    public PlayerSave playerSave;
+
     public Snapshot CreateSnapshot(){
-        return new Snapshot(_current.profile.playerName);
+        return new Snapshot(_current.profile.playerName, playerSave==null?"none":playerSave.name);
+    }
+
+    public static void Load(SaveData saveData){
+        _current = saveData;
     }
 
 }

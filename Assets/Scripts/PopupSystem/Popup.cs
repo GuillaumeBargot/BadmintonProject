@@ -19,7 +19,7 @@ public class Popup : MonoBehaviour
         this.parentPopupSystem = parentPopupSystem;
     }
 
-    private void ClosePopup(){
+    protected void ClosePopup(){
         parentPopupSystem.ClosePopup(this);
     }
 }
