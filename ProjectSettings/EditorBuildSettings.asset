@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MatchScene.unity
     guid: 3d296743fc29d45209b1b323b994ab11
+  - enabled: 1
+    path: Assets/Scenes/PlayerProfileScene.unity
+    guid: 52d3afff67a314b959ef726daf75122f
   m_configObjects: {}

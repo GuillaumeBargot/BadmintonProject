@@ -12,6 +12,8 @@ public class HomePlayerButton : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI playerNameTxt;
+
+    private UnityAction launchPlayerProfileAction;
     // Start is called before the first frame update
 
     bool playerExists = false;
@@ -22,6 +24,9 @@ public class HomePlayerButton : MonoBehaviour
         CheckForExistingPlayer();
     }
 
+    public void SetLaunchPlayerProfileAction(UnityAction action){
+        launchPlayerProfileAction = action;
+    }
     private void CheckForExistingPlayer(){
         PlayerSave player = SaveData.current.playerSave;
         if(player==null){
@@ -63,5 +68,6 @@ public class HomePlayerButton : MonoBehaviour
     private void GoToPlayerProfileScene(){
         Debug.Log("Clicked on Player");
         //Empty for now
+        launchPlayerProfileAction.Invoke();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class NewGameScene : MonoBehaviour{
+public class NewGameScene : GameScene{
     
     [SerializeField]
     PopupSystem popupSystem;
@@ -20,24 +20,11 @@ public class NewGameScene : MonoBehaviour{
 
         CoachNamePopup popup = popupSystem.InstantiatePopup<CoachNamePopup>(coachNamePopupPrefab);
         popup.SetSelectedSlot(newSaveSlots.GetSelectedSlot());
+        popup.SetLaunchSceneMethod(LaunchHome);
     }
 
-    public void OnBackClick(){
-        StartCoroutine(GoToMainMenu());
+    public void LaunchHome(){
+        navigationManager.LaunchScene(NavigationManager.SceneName.HomeScene,this,false);
     }
-    
-    IEnumerator GoToMainMenu(){
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
-        // a sceneBuildIndex of 1 as shown in Build Settings.
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenuScene");
-
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-    }
 }

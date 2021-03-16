@@ -4,19 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuScene : MonoBehaviour
+public class MainMenuScene : GameScene
 {
-   [SerializeField]
-   private SaveManager saveManager; 
+    [SerializeField]
+    private SaveManager saveManager;
 
-   [SerializeField]
-   private Button continueButton;
+    [SerializeField]
+    private Button continueButton;
 
-   private bool continueAvailable;
+    private bool continueAvailable;
 
-   private void Awake() {
-        SetContinueAvailable(saveManager.GetCurrentSave()!=-1);
-   }
+    protected override void Awake()
+    {
+        base.Awake();
+        SetContinueAvailable(saveManager.GetCurrentSave() != -1);
+    }
 
     public void OnButtonClick(int optionNumber)
     {
@@ -27,13 +29,13 @@ public class MainMenuScene : MonoBehaviour
                 LoadGame();
                 break;
             case 1:
-                GoToScene("NewGameScene");
+                navigationManager.LaunchScene(NavigationManager.SceneName.NewGameScene, this, true);
                 break;
             case 2:
-                GoToScene("LoadScene");
+                navigationManager.LaunchScene(NavigationManager.SceneName.LoadScene, this, true);
                 break;
             case 3:
-                GoToScene("MatchScene");
+                navigationManager.LaunchScene(NavigationManager.SceneName.MatchScene, this, true);
                 break;
             case 4:
             default:
@@ -51,34 +53,15 @@ public class MainMenuScene : MonoBehaviour
 #endif
     }
 
-    private void GoToScene(string sceneName)
+    private void LoadGame()
     {
-        StartCoroutine(LoadYourAsyncScene(sceneName));
-    }
-
-    IEnumerator LoadYourAsyncScene(string sceneName)
-    {
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
-        // a sceneBuildIndex of 1 as shown in Build Settings.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-    }
-
-    private void LoadGame(){
         int currentSave = saveManager.GetCurrentSave();
         saveManager.Load(currentSave);
-        GoToScene("HomeScene");
+        navigationManager.LaunchScene(NavigationManager.SceneName.HomeScene,this,true);
     }
 
-    private void SetContinueAvailable(bool available){
+    private void SetContinueAvailable(bool available)
+    {
         continueButton.interactable = available;
     }
 }

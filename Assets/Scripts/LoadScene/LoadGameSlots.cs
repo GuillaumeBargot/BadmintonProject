@@ -25,6 +25,8 @@ public class LoadGameSlots : GameSlots
 
     private UnityAction<int> onDeleteClick;
 
+    private UnityAction sceneLaunchAction;
+
     private void Start() {
         deleteButton0.gameObject.SetActive(savesExist[0]);
         deleteButton1.gameObject.SetActive(savesExist[1]);
@@ -54,22 +56,11 @@ public class LoadGameSlots : GameSlots
 
     public void OnValidateClick(){
         saveManager.Load(currentSaveSelected);
-        StartCoroutine(GoToHomeScene());
+        sceneLaunchAction.Invoke();
     }
 
-    IEnumerator GoToHomeScene(){
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
-        // a sceneBuildIndex of 1 as shown in Build Settings.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("HomeScene");
-
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+    public void SetLaunchAction(UnityAction sceneLaunchAction){
+        this.sceneLaunchAction = sceneLaunchAction;
     }
 
     public void SetOnDeleteClickAction(UnityAction<int> onDeleteClickAction){
