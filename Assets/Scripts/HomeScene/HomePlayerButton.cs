@@ -14,10 +14,6 @@ public class HomePlayerButton : MonoBehaviour
     TextMeshProUGUI playerNameTxt;
     // Start is called before the first frame update
 
-    public UnityEvent clickPlayerEvent;
-
-    public UnityEvent clickNoPlayerEvent;
-
     bool playerExists = false;
     void Awake()
     {
@@ -38,8 +34,8 @@ public class HomePlayerButton : MonoBehaviour
     }
 
     public void OnClick(){
-        if(playerExists) clickPlayerEvent.Invoke();
-        else clickNoPlayerEvent.Invoke();
+        if(playerExists) GoToPlayerProfileScene();
+        else CreateNewPlayer();
     }
 
     private void ShowPlayerName(string name){
@@ -56,5 +52,16 @@ public class HomePlayerButton : MonoBehaviour
 
     private void Nothing(){
 
+    }
+
+    private void CreateNewPlayer(){
+        Debug.Log("Created new player");
+        SaveData.current.playerSave = new PlayerSave(new Player("NoName ForNow"));
+        Refresh();
+    }
+
+    private void GoToPlayerProfileScene(){
+        Debug.Log("Clicked on Player");
+        //Empty for now
     }
 }

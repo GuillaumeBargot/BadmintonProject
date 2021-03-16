@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+   [SerializeField]
+   private SaveManager saveManager; 
 
-    }
+   [SerializeField]
+   private Button continueButton;
 
-    // Update is called once per frame
-    void Update()
-    {
+   private bool continueAvailable;
 
-    }
+   private void Awake() {
+        SetContinueAvailable(saveManager.GetCurrentSave()!=-1);
+   }
 
     public void OnButtonClick(int optionNumber)
     {
@@ -23,6 +24,8 @@ public class MainMenuScene : MonoBehaviour
         switch (optionNumber)
         {
             case 0:
+                LoadGame();
+                break;
             case 1:
                 GoToScene("NewGameScene");
                 break;
@@ -67,5 +70,15 @@ public class MainMenuScene : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    private void LoadGame(){
+        int currentSave = saveManager.GetCurrentSave();
+        saveManager.Load(currentSave);
+        GoToScene("HomeScene");
+    }
+
+    private void SetContinueAvailable(bool available){
+        continueButton.interactable = available;
     }
 }

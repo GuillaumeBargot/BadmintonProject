@@ -24,8 +24,10 @@ public class SaveData
 
     public PlayerSave playerSave;
 
+    public Calendar calendar;
+
     public Snapshot CreateSnapshot(){
-        return new Snapshot(_current.profile.playerName, playerSave==null?"none":playerSave.name);
+        return new Snapshot(_current.profile.playerName, playerSave==null?"none":playerSave.name, calendar==null?-1:calendar.GetCurrentMonth());
     }
 
     public static void Load(SaveData saveData){

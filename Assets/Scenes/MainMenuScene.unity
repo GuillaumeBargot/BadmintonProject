@@ -1500,6 +1500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7076c4238754556a23dde151854961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveManager: {fileID: 11400000, guid: 32ba08975889f4434ad38bee7e57a7fd, type: 2}
+  continueButton: {fileID: 854838993}
 --- !u!1 &1743407264
 GameObject:
   m_ObjectHideFlags: 0

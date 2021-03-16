@@ -10,12 +10,14 @@ public class SaveManager : ScriptableObject
     private string SAVES_FOLDER;
     private string[] snapshotFiles;
 
+    private int currentSave = -1;
+
     private void Awake() {
         SAVES_FOLDER = Application.persistentDataPath + "/saves/";
     }
 
     public void Save(){
-        //Test Async:
+        currentSave = SaveData.current.saveSlot;
         string persistentPath = Application.persistentDataPath;
         Task t = Task.Run(() => SerializationManager.SaveAsync(SaveData.current.saveSlot, SaveData.current.CreateSnapshot(), SaveData.current, persistentPath));
         t.Wait();
@@ -24,10 +26,14 @@ public class SaveManager : ScriptableObject
 
     public void Load(int nbSave){
         SaveData.Load((SaveData)SerializationManager.LoadSave(nbSave));
+        currentSave = nbSave;
     }
 
     public void Delete(int nbSave){
         SerializationManager.DeleteSave(nbSave);
+        if(currentSave == nbSave){
+            currentSave = -1;
+        }
     }
 
     public void GetSnapshots(){
@@ -36,5 +42,9 @@ public class SaveManager : ScriptableObject
         }
 
         snapshotFiles = Directory.GetFiles(SAVES_FOLDER, "*.snap");
+    }
+
+    public int GetCurrentSave(){
+        return currentSave;
     }
 }

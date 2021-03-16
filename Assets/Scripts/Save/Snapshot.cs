@@ -8,8 +8,11 @@ public class Snapshot {
 
     public string currentPlayerName;
 
-    public Snapshot(string coachName, string playerName){
+    public int currentMonth;
+
+    public Snapshot(string coachName, string playerName, int currentMonth){
         this.coachName = coachName;
         this.currentPlayerName = playerName;
+        this.currentMonth = currentMonth;
     }
 }

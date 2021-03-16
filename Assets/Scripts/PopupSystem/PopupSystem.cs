@@ -47,7 +47,7 @@ public class PopupSystem : MonoBehaviour
 
     public void ClosePopup(Popup popup)
     {
-        Debug.Log("Not sure if it exists? " + (visiblePopups.Contains(popup)));
+        //Debug.Log("Not sure if it exists? " + (visiblePopups.Contains(popup)));
         visiblePopups.Remove(popup);
         Destroy(popup.gameObject);
         CheckAndCorrectPanelVisibility();

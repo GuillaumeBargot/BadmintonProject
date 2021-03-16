@@ -24,6 +24,7 @@ public class CoachNamePopup : Popup
             SaveData.current.profile = new HumanPlayerProfile();
             SaveData.current.profile.playerName = inputField.text;
             SaveData.current.saveSlot = selectedSlot;
+            SaveData.current.calendar = new Calendar();
             saveManager.Save();
             StartCoroutine(GoToHomeScene());
         }
