@@ -20,10 +20,12 @@ public class PlayButton : MonoBehaviour
 
     private void Start() {
         eventReader.pausedEvent+=OnPaused;
+        eventReader.matchOver += OnMatchOver;
     }
 
     private void OnDestroy() {
         eventReader.pausedEvent-=OnPaused;
+        eventReader.matchOver -= OnMatchOver;
     }
 
     public void OnClick(){
@@ -43,5 +45,9 @@ public class PlayButton : MonoBehaviour
 
     public void OnStatePaused(){
         icon.sprite = playBtnIcon;
+    }
+
+    public void OnMatchOver(){
+        ((Button)(this.GetComponent<Button>())).enabled = false;
     }
 }

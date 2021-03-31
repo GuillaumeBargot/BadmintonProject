@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GameEngine
 {
+    [System.Serializable]
     public enum ShotType
     {
         LONG = 0,

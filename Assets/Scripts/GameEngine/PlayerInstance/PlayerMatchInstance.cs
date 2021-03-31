@@ -7,60 +7,81 @@ public class PlayerMatchInstance
     //You will use function here to communicate between the two players
 
     //This is to know the stats/the behaviour of the player concerned.
-    Player player;
+    private string name;
+    PlayerStats playerStats;
     private EquippedPlaystyles equippedPlaystyles;
     private Playstyle currentPlaystyle;
+    private ModifierList playerBaseModList;
     private ModifierList matchInstanceModList;
+    private ShotCoordProbabilities playerShotCoordProbabilities;
     private UsableStats usableStats;
 
     public PlayerMatchInstance(){
-        player = new Player();
-        equippedPlaystyles = player.equippedPlaystyles;
+        name = PlayerFirstNameGenerator.GetFirstName();
+        playerStats = new PlayerStats();
+        equippedPlaystyles = new EquippedPlaystyles();
         currentPlaystyle = equippedPlaystyles.GetPlaystyle(0);
+        playerBaseModList = new ModifierList();
+        playerShotCoordProbabilities = new ShotCoordProbabilities();
         RefreshModListWithPlaystyle();
     }
 
     public PlayerMatchInstance(string name){
-        player = new Player(name);
-        equippedPlaystyles = player.equippedPlaystyles;
+        this.name = name;
+        playerStats = new PlayerStats();
+        equippedPlaystyles = new EquippedPlaystyles();
         currentPlaystyle = equippedPlaystyles.GetPlaystyle(0);
+        playerBaseModList = new ModifierList();
+        playerShotCoordProbabilities = new ShotCoordProbabilities();
+        RefreshModListWithPlaystyle();
+    }
+
+    public PlayerMatchInstance(PlayerSave player){
+        Debug.Log("Creating PMI with PlayerSave");
+        name = player.name;
+        playerStats = player.playerStats;
+        equippedPlaystyles = player.GetEquippedPlaystyles();
+        currentPlaystyle = equippedPlaystyles.GetPlaystyle(0);
+        playerBaseModList = player.modifierList;
+        playerShotCoordProbabilities = player.GetShotCoordProbabilities();
         RefreshModListWithPlaystyle();
     }
 
     private void RefreshModListWithPlaystyle(){
-        matchInstanceModList = player.modifierList;
+
+        matchInstanceModList = playerBaseModList;
         matchInstanceModList.MergeWith(currentPlaystyle.modifiers);
         matchInstanceModList.Log();
-        usableStats = new UsableStats(player.stats,matchInstanceModList);
+        usableStats = new UsableStats(playerStats,matchInstanceModList);
     }
 
     public string Name(){
-        return player.name;
+        return name;
     }
 
     public int Strength(){
-        return player.stats.strength;
+        return playerStats.strength;
     }
     public int Speed(){
-        return player.stats.speed;
+        return playerStats.speed;
     }
     public int Reflexes(){
-        return player.stats.reflexes;
+        return playerStats.reflexes;
     }
     public int Intelligence(){
-        return player.stats.intelligence;
+        return playerStats.intelligence;
     }
 
     public int Dexterity(){
-        return player.stats.dexterity;
+        return playerStats.dexterity;
     }
 
     public int Endurance(){
-        return player.stats.endurance;
+        return playerStats.endurance;
     }
     
     public ShotCoordProbabilities ShotCoordTendencies(){
-        return player.shotCoordProbabilities;
+        return playerShotCoordProbabilities;
     }
 
     public Playstyle GetCurrentPlaystyle(){

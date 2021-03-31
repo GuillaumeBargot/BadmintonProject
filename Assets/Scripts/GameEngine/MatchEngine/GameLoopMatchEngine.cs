@@ -10,13 +10,13 @@ namespace GameEngine
         public void StartGame()
         {
             Debug.Log("Match between " + player.Name() + " and " + cpu.Name() + " starting");
-            score = Score.CreateBO3Match(eventReader);
+            scoreManager = ScoreManager.CreateBO3Match(eventReader);
             StartCoroutine(PlayMatch());
         }
 
         public IEnumerator PlayMatch()
         {
-            while (!score.CheckIfEndOfMatch())
+            while (!scoreManager.CheckIfEndOfMatch())
             {
                 yield return StartCoroutine(PointCoroutine());
                 ProcessFinishedPoint();
@@ -27,8 +27,8 @@ namespace GameEngine
 
         public IEnumerator PointCoroutine()
         {
-            currentPoint = new Point(score, pointHistory);
-            PositionTwoPlayersBeforeServe(currentPoint.currentPlayerServing, currentPoint.GetServingPositions(score));
+            currentPoint = new Point(scoreManager.Score, pointHistory);
+            PositionTwoPlayersBeforeServe(currentPoint.currentPlayerServing, currentPoint.GetServingPositions(scoreManager.Score));
             //currentShot = CreateShot(GetPlayer(playerServing));
             //currentPlayerShooting = playerServing;
            // bool isServing = true;
@@ -66,7 +66,7 @@ namespace GameEngine
                     break;
                 case ShotResult.FAIL:
                     Debug.Log(currentPMI.Name() + " fails a " + Shot.GetShotTypeName(currentPoint.currentShot.type) + " @" + currentPoint.currentShot.to.Coord + "!");
-                    score.ScoreAgainst(currentPoint.currentPlayerShooting);
+                    scoreManager.ScoreAgainst(currentPoint.currentPlayerShooting);
                     FieldShot(currentPoint.currentPlayerShooting, currentPoint.currentShot.from, currentPoint.currentShot.to,currentPoint.currentShot.type, currentPoint.currentShot.shotTime);
                     RefreshScoreRecap();
                     currentPoint.pointOver = true;

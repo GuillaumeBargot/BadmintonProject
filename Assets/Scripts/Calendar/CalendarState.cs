@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class HumanPlayerProfile
+public enum CalendarState 
 {
-    public string playerName;
-    
+    POST_SEASON,
+    SEASON,
+    TOURNAMENT,
+    END_OF_SEASON
 }

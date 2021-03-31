@@ -28,11 +28,15 @@ public class LoadGameSlots : GameSlots
     private UnityAction sceneLaunchAction;
 
     private void Start() {
+        RefreshDeleteButtons();
+    }
+
+
+    private void RefreshDeleteButtons(){
         deleteButton0.gameObject.SetActive(savesExist[0]);
         deleteButton1.gameObject.SetActive(savesExist[1]);
         deleteButton2.gameObject.SetActive(savesExist[2]);
     }
-
     public void OnSlotClick(int slotNumber)
     {
         PutArrowAt(slotNumber);
@@ -69,6 +73,7 @@ public class LoadGameSlots : GameSlots
 
     public void Refresh(){
         LoadSnapshotsIntoButtons();
+        RefreshDeleteButtons();
     }
 
 }

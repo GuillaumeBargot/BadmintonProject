@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace GameEngine
 {
+    [System.Serializable]
     public class PointHistory
     {
         private List<List<HistoryPoint>> points;

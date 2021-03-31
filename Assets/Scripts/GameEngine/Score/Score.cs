@@ -5,45 +5,24 @@ using System;
 
 namespace GameEngine
 {
+    [System.Serializable]
     public class Score
     {
-
-        private static int MAX_POINTS = 21;
-
-        private static int MIN_DIFFERENCE = 2;
-
-        private static int MAX_MAX_POINTS = 30;
-
         private (int, int) matchScore;
         private (int, int)[] setsScores;
         private int currentSet;
 
-        private bool matchOver = false;
-
-        private MatchEventReader eventReader;
-
         //------------------------------ CREATION ---------------------------------
-        public static Score CreateBO3Match(MatchEventReader eventReader)
-        {
-            return CreateBestOfMatch(3, eventReader);
-        }
 
-        public static Score CreateBO5Match(MatchEventReader eventReader)
-        {
-            return CreateBestOfMatch(5, eventReader);
-        }
 
-        private static Score CreateBestOfMatch(int nbSets, MatchEventReader eventReader)
+        public Score(int nbSets)
         {
-            (int, int)[] setsScores = new (int, int)[nbSets].Populate((0, 0));
-            (int, int) matchScore = (0, 0);
-            int currentSet = 0;
-            return new Score(setsScores, matchScore, currentSet, eventReader);
+            setsScores = new (int, int)[nbSets].Populate((0, 0));
+            matchScore = (0, 0);
+            currentSet = 0;
         }
-
-        private Score((int, int)[] setsScores, (int, int) matchScore, int currentSet, MatchEventReader eventReader)
+        public Score((int, int) matchScore, (int, int)[] setsScores, int currentSet)
         {
-            this.eventReader = eventReader;
             this.setsScores = setsScores;
             this.matchScore = matchScore;
             this.currentSet = currentSet;
@@ -51,84 +30,21 @@ namespace GameEngine
 
         //------------------------------ POINTS HANDLING ---------------------------------
 
-        public void PointPlayer1()
+        public void AddPoint(int player)
         {
-            setsScores[currentSet].Item1++;
-            Checks();
-        }
-
-        public void PointPlayer2()
-        {
-            setsScores[currentSet].Item2++;
-            Checks();
-        }
-
-        public void ScoreFor(int playerID)
-        {
-            if (playerID == 0)
+            if (player == 0)
             {
-                PointPlayer1();
+                setsScores[currentSet].Item1++;
             }
             else
             {
-                PointPlayer2();
+                setsScores[currentSet].Item2++;
             }
         }
 
-        public void ScoreAgainst(int playerID)
+        public void AddSet(int player)
         {
-            if (playerID == 0)
-            {
-                PointPlayer2();
-            }
-            else
-            {
-                PointPlayer1();
-            }
-        }
-
-        //------------------------------ CHECKERS ---------------------------------
-
-        public void Checks()
-        {
-            
-            if (CheckIfEndOfSet())
-            {
-                ProceedChangeOfSet();
-                Debug.Log("-------END OF SET--------");
-                eventReader.OnNewSet();
-            }
-        }
-        public bool CheckIfEndOfSet()
-        {
-            (int score1, int score2) = setsScores[currentSet];
-            if ( SomeoneOver21(score1, score2) &&
-            ( DifferenceOver2(score1, score2) || SomeoneAtMaxScore(score1, score2)))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool SomeoneOver21(int score1, int score2){
-            return (score1 >= MAX_POINTS || score2 >= MAX_POINTS);
-        }
-
-        private bool DifferenceOver2(int score1, int score2){
-            return (Math.Abs(score1 - score2) >= MIN_DIFFERENCE);
-        }
-
-        private bool SomeoneAtMaxScore(int score1, int score2){
-            return (score1<=MAX_MAX_POINTS || score2<=MAX_MAX_POINTS);
-        }
-
-        public void ProceedChangeOfSet()
-        {
-            Debug.Log("Proceeding change of Set");
-            if (setsScores[currentSet].Item1 > setsScores[currentSet].Item2)
+            if (player == 0)
             {
                 matchScore.Item1++;
             }
@@ -136,35 +52,19 @@ namespace GameEngine
             {
                 matchScore.Item2++;
             }
-            if (!CheckIfEndOfMatch())
-            {
-                currentSet++;
-            }
-            else
-            {
-                MatchOver();
-            }
         }
 
-        public bool CheckIfEndOfMatch()
+        public void NextCurrentSet(){
+            currentSet++;
+        }
+
+        public (int, int) GetCurrentSetScore()
         {
-            int numberToBeat = setsScores.Length / 2;
-            if (matchScore.Item1 > numberToBeat || matchScore.Item2 > numberToBeat)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return setsScores[currentSet];
         }
-
-        public void MatchOver()
-        {
-            matchOver = true;
+        public (int, int) GetMatchScore(){
+            return matchScore;
         }
-
-        //------------------------------ GETTERS ---------------------------------
 
         public void LogScore()
         {
@@ -173,24 +73,5 @@ namespace GameEngine
                 Debug.Log(setsScores[i].Item1 + " / " + setsScores[i].Item2);
             }
         }
-
-        public ScoreRecap GetScoreRecap()
-        {
-            return new ScoreRecap(matchScore, setsScores[currentSet]);
-        }
-        public (int, int)[] GetSetsScores()
-        {
-            return setsScores;
-        }
-
-        public (int, int) GetMatchScore()
-        {
-            return matchScore;
-        }
-
-        public (int, int) GetCurrentSetScore(){
-            return setsScores[currentSet];
-        }
-
     }
 }

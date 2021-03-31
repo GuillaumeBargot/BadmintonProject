@@ -18,6 +18,9 @@ namespace GameEngine
         PlaystylePopup playstylePopupPrefab;
 
         [SerializeField]
+        EndMatchPopup endMatchPopupPrefab;
+
+        [SerializeField]
         TextMeshProUGUI p1PlaystyleText;
 
         [SerializeField]
@@ -33,10 +36,13 @@ namespace GameEngine
             eventReader.advantageUpdatedEvent += UpdateAdvantageUI;
             eventReader.advantageResetEvent += ResetAdvantageUI;
             eventReader.critEvent += CritMessage;
+            eventReader.matchOver += OnMatchOver;
 
             //Kick the event for good mesure:
             eventReader.OnPlaystyleChanged(0);
             eventReader.OnPlaystyleChanged(1);
+
+            RefreshScoreRecap();
         }
 
         private void OnDestroy()
@@ -45,6 +51,7 @@ namespace GameEngine
             eventReader.advantageUpdatedEvent -= UpdateAdvantageUI;
             eventReader.advantageResetEvent -= ResetAdvantageUI;
             eventReader.critEvent -= CritMessage;
+            eventReader.matchOver -= OnMatchOver;
             aIBehavior.OnDestroy();
         }
 
@@ -92,9 +99,8 @@ namespace GameEngine
 
         private void RefreshScoreRecap()
         {
-            score.LogScore();
-            eventReader.OnScoreChanged(score.GetScoreRecap());
-            //scoreDisplay.SetScoreRecap(score.GetScoreRecap());
+            scoreManager.LogScore();
+            eventReader.OnScoreChanged(scoreManager.Score);
         }
 
         public void OnPlaystyleClick()

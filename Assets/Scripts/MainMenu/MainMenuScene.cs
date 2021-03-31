@@ -55,8 +55,7 @@ public class MainMenuScene : GameScene
 
     private void LoadGame()
     {
-        int currentSave = saveManager.GetCurrentSave();
-        saveManager.Load(currentSave);
+        saveManager.Load(saveManager.GetCurrentSave());
         navigationManager.LaunchScene(NavigationManager.SceneName.HomeScene,this,true);
     }
 

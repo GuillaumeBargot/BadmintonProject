@@ -18,14 +18,14 @@ public class ScoreDisplay : MonoBehaviour
     private (bool, bool) pointAnimations = (false, false);
     private (bool, bool) setAnimations = (false, false);
 
-    private ScoreRecap storedScoreRecap = null;
+    private Score storedScore = null;
 
     private void Start() {
-        uIEventReader.scoreChangedEvent+=SetScoreRecap;
+        uIEventReader.scoreChangedEvent+=SetScore;
     }
 
     private void OnDestroy() {
-        uIEventReader.scoreChangedEvent-=SetScoreRecap;
+        uIEventReader.scoreChangedEvent-=SetScore;
     }
     public void SetPointTexts((int, int) points)
     {
@@ -39,17 +39,22 @@ public class ScoreDisplay : MonoBehaviour
         setsTexts[1].text = sets.Item2.ToString();
     }
 
-    public void SetScoreRecap(ScoreRecap scoreRecap)
+    public void SetScore(Score score)
     {
-        if (storedScoreRecap != null)
+        if (storedScore != null)
         {
             //Check if there is any difference between the two match scores:
-            pointAnimations.Item1 = scoreRecap.currentSet.Item1 != storedScoreRecap.currentSet.Item1;
-            pointAnimations.Item2 = scoreRecap.currentSet.Item2 != storedScoreRecap.currentSet.Item2;
-            setAnimations.Item1 = scoreRecap.sets.Item1 != storedScoreRecap.sets.Item1;
-            setAnimations.Item1 = scoreRecap.sets.Item2 != storedScoreRecap.sets.Item2;
+            (int, int) currentSetScore = score.GetCurrentSetScore();
+            (int, int) currentSetStoredScore = storedScore.GetCurrentSetScore();
+            pointAnimations.Item1 = currentSetScore.Item1 != currentSetStoredScore.Item1;
+            pointAnimations.Item2 = currentSetScore.Item2 != currentSetStoredScore.Item2;
+
+            (int, int) matchScore = score.GetMatchScore();
+            (int, int) storedMatchScore = storedScore.GetMatchScore();
+            setAnimations.Item1 = matchScore.Item1 != storedMatchScore.Item1;
+            setAnimations.Item1 = matchScore.Item2 != storedMatchScore.Item2;
         }
-        storedScoreRecap = scoreRecap;
+        storedScore = score;
         PrintScoreRecap();
     }
 
@@ -59,11 +64,11 @@ public class ScoreDisplay : MonoBehaviour
     }
 
     private void PrintCurrentScore(){
-        SetTexts(pointsTexts,storedScoreRecap.currentSet);
+        SetTexts(pointsTexts,storedScore.GetCurrentSetScore());
     }
 
     private void PrintSetScore(){
-        SetTexts(setsTexts, storedScoreRecap.sets);
+        SetTexts(setsTexts, storedScore.GetMatchScore());
     }
     
     private void SetTexts(TextMeshProUGUI[] texts, (int,int) score){

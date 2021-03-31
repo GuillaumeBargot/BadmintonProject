@@ -21,7 +21,7 @@ public class HomePlayerButton : MonoBehaviour
     {
         /*clickNoPlayerAction = new UnityEvent(Nothing);
         clickPlayerAction = new UnityEvent(Nothing);*/
-        CheckForExistingPlayer();
+        Refresh();
     }
 
     public void SetLaunchPlayerProfileAction(UnityAction action){
@@ -61,7 +61,7 @@ public class HomePlayerButton : MonoBehaviour
 
     private void CreateNewPlayer(){
         Debug.Log("Created new player");
-        SaveData.current.playerSave = new PlayerSave(new Player("NoName ForNow"));
+        SaveData.current.playerSave = new PlayerSave(new Player(PlayerFirstNameGenerator.GetFirstName()));
         Refresh();
     }
 

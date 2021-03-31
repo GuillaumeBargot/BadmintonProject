@@ -6,11 +6,23 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "CalendarEventReader", menuName = "Events/CalendarEventReader")]
 public class CalendarEventReader : ScriptableObject
 {
-   public event UnityAction<Calendar> calendarChanged;
+    public event UnityAction<Calendar> calendarDateChanged;
+    public event UnityAction<CalendarState> calendarStateChanged;
 
-   public void OnCalendarChanged(Calendar calendar)
+    public void OnCalendarDateChanged(Calendar calendar)
     {
-        calendarChanged.Invoke(calendar);
+        if (calendarDateChanged != null)
+        {
+            calendarDateChanged.Invoke(calendar);
+        }
+    }
+
+    public void OnCalendarStateChanged(CalendarState calendarState)
+    {
+        if (calendarStateChanged != null)
+        {
+            calendarStateChanged.Invoke(calendarState);
+        }
     }
 
 }

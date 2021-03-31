@@ -26,6 +26,19 @@ public class SaveData
 
     public Calendar calendar;
 
+    public static bool CurrentMatchExists{
+        get{
+            return current!=null && current.calendar!=null && current.calendar.GetTournament()!=null && current.calendar.GetTournament().currentMatch!=null;
+        }
+    }
+
+    public static void NewGame(string coachName, int slot){
+            SaveData.current.profile = new HumanPlayerProfile();
+            SaveData.current.profile.playerName = coachName;
+            SaveData.current.saveSlot = slot;
+            SaveData.current.calendar = new Calendar();
+    }
+
     public Snapshot CreateSnapshot(){
         return new Snapshot(_current.profile.playerName, playerSave==null?"none":playerSave.name, calendar==null?-1:calendar.GetCurrentMonth());
     }

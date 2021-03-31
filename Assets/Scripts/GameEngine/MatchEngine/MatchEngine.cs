@@ -17,14 +17,23 @@ namespace GameEngine
 
         PlayerMatchInstance cpu;
 
-        Score score;
+        PointHistory pointHistory;
+
+        ScoreManager scoreManager;
 
         [SerializeField]
         Field field;
 
+        [SerializeField]
+        MatchScene scene;
+
         private bool isPaused = true;
 
-        public PointHistory pointHistory;
+        public PointHistory PointHistory{
+            get{
+                return SaveData.current.calendar.GetTournament().currentMatch.pointHistory;
+            }
+        }
 
         private AIBehavior aIBehavior;
 
@@ -47,11 +56,19 @@ namespace GameEngine
 
             instance = this;
 
-            player = new PlayerMatchInstance("JeanPlayer");
-            cpu = new PlayerMatchInstance("EdouardCPU");
+            if(SaveData.CurrentMatchExists){
+                player = new PlayerMatchInstance(SaveData.current.playerSave);
+                cpu = new PlayerMatchInstance(SaveData.current.calendar.GetTournament().currentMatch.cpuPlayer);
+            }else{
+                player = new PlayerMatchInstance("JeanPlayer");
+                cpu = new PlayerMatchInstance("EdouardCPU");
+            }
+
             pointHistory = new PointHistory();
+            
             aIBehavior = new EasyAIBehavior(eventReader);
             StartGame();
+
 
 
         }
@@ -90,6 +107,17 @@ namespace GameEngine
         private void PositionTwoPlayersBeforeServe(int playerServing, (ShotCoord, ShotCoord) positions)
         {
             field.PositionPlayers(playerServing, positions);
+        }
+
+        public void OnMatchOver(){
+            Pause();
+            //Todo create a popup EndMatchPopup with a recap, a space to put all that you've earned and a "Finish" button that takes you back
+            //to the tournamenet page / main menu
+            EndMatchPopup popup = PopupSystem.Instance.InstantiatePopup<EndMatchPopup>(endMatchPopupPrefab);
+            Debug.Log("Player " + scoreManager.WhoWon() + " won!");
+            bool won = (scoreManager.WhoWon()==0);
+            popup.Init(won,()=>scene.Back());
+
         }
     }
 }

@@ -12,10 +12,12 @@ namespace GameEngine
         public event UnityAction<Advantage> advantageUpdatedEvent;
         public event UnityAction advantageResetEvent;
         public event UnityAction<int> critEvent;
-        public event UnityAction<ScoreRecap> scoreChangedEvent;
+        public event UnityAction<Score> scoreChangedEvent;
 
         public event UnityAction newSet;
         public event UnityAction<bool> pausedEvent;
+
+        public event UnityAction matchOver;
 
         public void OnPlaystyleChanged(int player)
         {
@@ -37,9 +39,9 @@ namespace GameEngine
             critEvent.Invoke(player);
         }
 
-        public void OnScoreChanged(ScoreRecap scoreRecap)
+        public void OnScoreChanged(Score score)
         {
-            scoreChangedEvent.Invoke(scoreRecap);
+            scoreChangedEvent.Invoke(score);
         }
 
         public void OnPaused(bool paused)
@@ -49,6 +51,10 @@ namespace GameEngine
 
         public void OnNewSet(){
             newSet.Invoke();
+        }
+
+        public void OnMatchOver(){
+            matchOver.Invoke();
         }
     }
 }

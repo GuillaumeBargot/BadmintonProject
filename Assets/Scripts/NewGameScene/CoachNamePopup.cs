@@ -22,10 +22,7 @@ public class CoachNamePopup : Popup
         if(inputField.text == ""){
             Debug.LogError("InputField empty");
         }else{
-            SaveData.current.profile = new HumanPlayerProfile();
-            SaveData.current.profile.playerName = inputField.text;
-            SaveData.current.saveSlot = selectedSlot;
-            SaveData.current.calendar = new Calendar();
+            SaveData.NewGame(inputField.text,selectedSlot);
             saveManager.Save();
             launchSceneAction.Invoke();
         }
