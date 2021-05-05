@@ -15,7 +15,9 @@ public class NavigationManager : ScriptableObject
         MatchScene,
         NewGameScene,
         PlayerProfileScene,
-        TournamentScene
+        TournamentScene,
+        TrainingScene,
+        TrainingResultScene
     }
 
     List<SceneName> sceneBackHistory = new List<SceneName>();

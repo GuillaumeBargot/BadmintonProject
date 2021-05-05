@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TournamentScene.unity
     guid: ba410036d24da43ab9dff0d714ff5d15
+  - enabled: 1
+    path: Assets/Scenes/TrainingScene.unity
+    guid: 753127fe90de94209897a6fa34389866
+  - enabled: 1
+    path: Assets/Scenes/TrainingResultScene.unity
+    guid: 8320b9765f87c43a0b2271632b7e8efa
   m_configObjects: {}

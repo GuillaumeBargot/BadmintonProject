@@ -29,11 +29,15 @@ public class HomeScene : GameScene
     [SerializeField]
     Button killPlayerBtn;
 
+    [SerializeField]
+    Button trainingButton;
+
     protected override void Awake() {
         base.Awake();
         coachNameText.text = SaveData.current.profile.playerName;
         playerButton.SetLaunchPlayerProfileAction(LaunchPlayerProfile);
         calendarBar.SetStartTournamentAction(StartTournament);
+        calendarBar.SetNextMonthAction(NextMonth);
         calendarEventReader.calendarStateChanged += OnCalendarStateChanged;
         calendarEventReader.OnCalendarStateChanged(SaveData.current.calendar.GetCalendarState());
     }
@@ -53,6 +57,10 @@ public class HomeScene : GameScene
         SaveData.current.calendar.SetCalendarState(CalendarState.TOURNAMENT, calendarEventReader);
     }
 
+    public void NextMonth(){
+        navigationManager.LaunchScene(NavigationManager.SceneName.TrainingResultScene, this, false);
+    }
+
     private void OnCalendarStateChanged(CalendarState calendarState){
         switch(calendarState){
             case CalendarState.POST_SEASON:
@@ -61,6 +69,7 @@ public class HomeScene : GameScene
                 startSeasonButton.gameObject.SetActive(true);
                 goTournamentBtn.gameObject.SetActive(false);
                 killPlayerBtn.gameObject.SetActive(false);
+                trainingButton.gameObject.SetActive(false);
             break;
             case CalendarState.SEASON:
                 calendarBar.gameObject.SetActive(true);
@@ -69,6 +78,7 @@ public class HomeScene : GameScene
                 startSeasonButton.gameObject.SetActive(false);
                 goTournamentBtn.gameObject.SetActive(false);
                 killPlayerBtn.gameObject.SetActive(false);
+                trainingButton.gameObject.SetActive(true);
             break;
             case CalendarState.TOURNAMENT:
                 calendarBar.gameObject.SetActive(false);
@@ -76,6 +86,7 @@ public class HomeScene : GameScene
                 startSeasonButton.gameObject.SetActive(false);
                 goTournamentBtn.gameObject.SetActive(true);
                 killPlayerBtn.gameObject.SetActive(false);
+                trainingButton.gameObject.SetActive(false);
             break;
             case CalendarState.END_OF_SEASON:
                 calendarBar.gameObject.SetActive(false);
@@ -83,6 +94,7 @@ public class HomeScene : GameScene
                 startSeasonButton.gameObject.SetActive(false);
                 goTournamentBtn.gameObject.SetActive(false);
                 killPlayerBtn.gameObject.SetActive(true);
+                trainingButton.gameObject.SetActive(false);
             break;
         }
     }
@@ -104,6 +116,10 @@ public class HomeScene : GameScene
 
     public void OnKillPlayer(){
         SaveData.current.calendar.SetCalendarState(CalendarState.POST_SEASON, calendarEventReader);
+    }
+
+    public void OnTrainingClick(){
+        navigationManager.LaunchScene(NavigationManager.SceneName.TrainingScene, this, true);
     }
 
     public void Refresh(){

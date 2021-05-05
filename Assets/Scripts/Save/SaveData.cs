@@ -26,6 +26,8 @@ public class SaveData
 
     public Calendar calendar;
 
+    public TrainingSave training;
+
     public static bool CurrentMatchExists{
         get{
             return current!=null && current.calendar!=null && current.calendar.GetTournament()!=null && current.calendar.GetTournament().currentMatch!=null;
@@ -37,6 +39,7 @@ public class SaveData
             SaveData.current.profile.playerName = coachName;
             SaveData.current.saveSlot = slot;
             SaveData.current.calendar = new Calendar();
+            SaveData.current.training = new TrainingSave();
     }
 
     public Snapshot CreateSnapshot(){

@@ -21,11 +21,11 @@ public class PlayerProfileScene : GameScene
 
     private void SetPlayerStats(){
         PlayerStats stats = SaveData.current.playerSave.playerStats;
-        playerStatValuesTxt[0].text = stats.strength.ToString();
-        playerStatValuesTxt[1].text = stats.speed.ToString();
-        playerStatValuesTxt[2].text = stats.reflexes.ToString();
-        playerStatValuesTxt[3].text = stats.intelligence.ToString();
-        playerStatValuesTxt[4].text = stats.dexterity.ToString();
-        playerStatValuesTxt[5].text = stats.endurance.ToString();
+        playerStatValuesTxt[0].text = stats.Strength.ToString();
+        playerStatValuesTxt[1].text = stats.Speed.ToString();
+        playerStatValuesTxt[2].text = stats.Reflexes.ToString();
+        playerStatValuesTxt[3].text = stats.Intelligence.ToString();
+        playerStatValuesTxt[4].text = stats.Dexterity.ToString();
+        playerStatValuesTxt[5].text = stats.Endurance.ToString();
     }
 }

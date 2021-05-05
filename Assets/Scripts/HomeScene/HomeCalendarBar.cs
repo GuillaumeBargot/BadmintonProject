@@ -21,6 +21,7 @@ public class HomeCalendarBar : MonoBehaviour
 
 
     private UnityAction startTournamentAction;
+    private UnityAction nextMonthAction;
 
     private void OnEnable()
     {
@@ -49,7 +50,7 @@ public class HomeCalendarBar : MonoBehaviour
 
     public void OnNextClick()
     {
-        SaveData.current.calendar.NextMonth(calendarEventReader);
+        nextMonthAction.Invoke();
     }
 
     public void OnPlayClick()
@@ -81,5 +82,9 @@ public class HomeCalendarBar : MonoBehaviour
     public void SetStartTournamentAction(UnityAction action)
     {
         startTournamentAction = action;
+    }
+
+    public void SetNextMonthAction(UnityAction action){
+        nextMonthAction = action;
     }
 }

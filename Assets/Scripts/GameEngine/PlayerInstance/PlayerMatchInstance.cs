@@ -60,24 +60,24 @@ public class PlayerMatchInstance
     }
 
     public int Strength(){
-        return playerStats.strength;
+        return playerStats.Strength;
     }
     public int Speed(){
-        return playerStats.speed;
+        return playerStats.Speed;
     }
     public int Reflexes(){
-        return playerStats.reflexes;
+        return playerStats.Reflexes;
     }
     public int Intelligence(){
-        return playerStats.intelligence;
+        return playerStats.Intelligence;
     }
 
     public int Dexterity(){
-        return playerStats.dexterity;
+        return playerStats.Dexterity;
     }
 
     public int Endurance(){
-        return playerStats.endurance;
+        return playerStats.Endurance;
     }
     
     public ShotCoordProbabilities ShotCoordTendencies(){

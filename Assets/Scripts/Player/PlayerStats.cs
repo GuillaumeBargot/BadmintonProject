@@ -6,22 +6,74 @@ using UnityEngine;
 public class PlayerStats
 {
     //Placeholder
-    public int strength;
-    public int speed;
-    public int reflexes;
-    public int intelligence;
-    public int dexterity;
-    public int endurance;
-
-    
+    private float strength;
+    public int Strength{
+        get{
+            return (int)strength;
+        }
+    }
+    private float speed;
+    public int Speed{
+        get{
+            return (int)speed;
+        }
+    }
+    private float reflexes;
+    public int Reflexes{
+        get{
+            return (int)reflexes;
+        }
+    }
+    private float intelligence;
+    public int Intelligence{
+        get{
+            return (int)intelligence;
+        }
+    }
+    private float dexterity;
+    public int Dexterity{
+        get{
+            return (int)dexterity;
+        }
+    }
+    private float endurance;
+    public int Endurance{
+        get{
+            return (int)endurance;
+        }
+    }
 
     public PlayerStats(){
-        strength = 1;
-        speed = 1;
-        reflexes = 1;
-        intelligence = 1;
-        dexterity = 1;
-        endurance = 1;
+        strength = 1f;
+        speed = 1f;
+        reflexes = 1f;
+        intelligence = 1f;
+        dexterity = 1f;
+        endurance = 1f;
+    }
+
+    public void ImproveStrength(float improvement){
+        strength+=improvement;
+    }
+
+    public void ImproveSpeed(float improvement){
+        speed+=improvement;
+    }
+
+    public void ImproveDexterity(float improvement){
+        dexterity+=improvement;
+    }
+
+    public void ImproveReflexes(float improvement){
+        reflexes+=improvement;
+    }
+
+    public void ImproveIntelligence(float improvement){
+        intelligence+=improvement;
+    }
+
+    public void ImproveEndurance(float improvement){
+        endurance+=improvement;
     }
 
 

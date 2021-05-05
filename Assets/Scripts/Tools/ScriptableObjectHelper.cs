@@ -33,5 +33,9 @@ public class ScriptableObjectHelper
         return GetScriptableObjectWithID<ShotTypeProbabilities>("ShotTypeProbabilities",ID);
     }
 
+    public static Drill GetDrillWithId(string ID){
+        return GetScriptableObjectWithID<Drill>("Drills", ID);
+    }
+
     
 }
