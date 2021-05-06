@@ -52,6 +52,15 @@ public class PlayerStats
         endurance = 1f;
     }
 
+    public PlayerStats(int meanLvl){
+        strength = meanLvl;
+        speed = meanLvl;
+        reflexes = meanLvl;
+        intelligence = meanLvl;
+        dexterity = meanLvl;
+        endurance = meanLvl;
+    }
+
     public void ImproveStrength(float improvement){
         strength+=improvement;
     }

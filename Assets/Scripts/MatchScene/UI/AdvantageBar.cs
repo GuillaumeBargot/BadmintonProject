@@ -7,10 +7,10 @@ using GameEngine;
 public class AdvantageBar : MonoBehaviour
 {
     [SerializeField]
-    private RawImage[] cpuAdvantages;
+    private Image[] cpuAdvantages;
 
     [SerializeField]
-    private RawImage[] p1Avantages;
+    private Image[] p1Avantages;
 
     public void UpdateAdvantage(Advantage advantage){
         SetAdvantage(advantage.Player, advantage.Amount);
@@ -27,12 +27,12 @@ public class AdvantageBar : MonoBehaviour
         }
     }
 
-    private void DeactivateTheBars(RawImage[] bars){
+    private void DeactivateTheBars(Image[] bars){
         for(int i = 0; i < bars.Length; i ++){
             bars[i].gameObject.SetActive(false);
         }
     }
-    private void ActivateTheBars(RawImage[] bars, int number){
+    private void ActivateTheBars(Image[] bars, int number){
         if(number == 0) return;
         for(int i = 0; i < number; i++){
             bars[i].gameObject.SetActive(true);

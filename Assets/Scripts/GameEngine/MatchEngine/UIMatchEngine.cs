@@ -29,6 +29,9 @@ namespace GameEngine
         [SerializeField]
         MatchEventReader eventReader;
 
+        [SerializeField]
+        TopInformationBar topInformationBar;
+
 
         private void Start()
         {
@@ -41,6 +44,8 @@ namespace GameEngine
             //Kick the event for good mesure:
             eventReader.OnPlaystyleChanged(0);
             eventReader.OnPlaystyleChanged(1);
+
+            topInformationBar.Init(player,cpu);
 
             RefreshScoreRecap();
         }

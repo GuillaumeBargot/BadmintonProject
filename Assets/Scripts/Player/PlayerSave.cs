@@ -40,6 +40,17 @@ public class PlayerSave {
         return playerToReturn;
     }
 
+    public static PlayerSave CreateRandomCPU(int lvl){
+        PlayerSave playerToReturn = new PlayerSave();
+        playerToReturn.name = PlayerFirstNameGenerator.GetFirstName();
+        playerToReturn.playerStats = new PlayerStats(lvl);
+        playerToReturn.shotCoordProbabilities = new ShotCoordProbabilities().GetRawProbabilities();
+        playerToReturn.modifierList = new ModifierList();
+        playerToReturn.playstyleDeckIDs = new PlaystyleDeck().ToStringList();
+        playerToReturn.equippedPlaystylesIDs = new EquippedPlaystyles().ToStringList();
+        return playerToReturn;
+    }
+
     public EquippedPlaystyles GetEquippedPlaystyles(){
         return new EquippedPlaystyles(equippedPlaystylesIDs);
     }

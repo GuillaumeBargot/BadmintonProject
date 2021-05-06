@@ -53,7 +53,7 @@ public class Tournament {
             currentMatch = null;
             state = TournamentState.FINISHED;
         }else{
-            currentMatch = new MatchSave(PlayerSave.CreateRandomCPU());
+            currentMatch = new MatchSave(PlayerSave.CreateRandomCPU(1+doneMatches.Count*5));
         }
     }
 }
